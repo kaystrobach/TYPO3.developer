@@ -1,0 +1,46 @@
+<f:be.container
+		pageTitle="plimm"
+		loadJQuery="1"
+		includeCssFiles="{
+			1: '../typo3conf/ext/developer/Resources/Public/Contrib/carousel/css/bootstrap.css',
+			2: '../typo3conf/ext/developer/Resources/Public/Stylesheet/BackendModule.css'
+		}"
+		includeJsFiles="{
+			0: '../typo3conf/ext/themes/Resources/Public/Contrib/colorpicker/js/colorpicker.js',
+			1: '../typo3conf/ext/themes/Resources/Public/JavaScript/BackendModule.js',
+			2: '../typo3conf/ext/themes/Resources/Public/Contrib/unSlider/unslider.min.js',
+			3: '../typo3conf/ext/themes/Resources/Public/Contrib/carousel/js/bootstrap.min.js'
+		}"
+		>
+	<div class="typo3-fullDoc">
+		<div id="typo3-docheader">
+			<div class="typo3-docheader-functions">
+				<div class="left">
+					<f:be.menus.actionMenu>
+						<f:comment>
+							<f:be.menus.actionMenuItem label="{f:translate(key:'setTheme')}" controller="Editor" action="showTheme" />
+						</f:comment>
+
+						<f:be.menus.actionMenuItem label="Default:Index" controller="Default" action="index" />
+
+						<f:be.menus.actionMenuItem label="Information:ListPhpInfoAction" controller="Information" action="listPhpInfo" />
+						<f:be.menus.actionMenuItem label="Sprite:ListSpriteIcons" controller="Sprite" action="listSpriteIcons" />
+
+					</f:be.menus.actionMenu>
+				</div>
+				<div class="right">
+					<f:be.pagePath /><f:be.pageInfo />
+				</div>
+			</div>
+			<div class="typo3-docheader-buttons">
+				<f:render section="Buttons" optional="1" />
+			</div>
+		</div>
+	</div>
+
+	<div id="typo3-docbody">
+		<div id="typo3-inner-docbody">
+			<f:render section="Content" />
+		</div>
+	</div>
+</f:be.container>

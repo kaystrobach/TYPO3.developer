@@ -1,0 +1,51 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>How to add your own icon</h1>
+	<p>
+		You add further icons from your own extension using:
+	</p>
+	<dev:highlight>
+		// ext_tables.php:
+		$icons = array(\'extensions-myextension-icon1\', \'extensions-myextension-icon2\');
+		t3lib_SpriteManager::addIconSprite($icons,t3lib_extMgm::siteRelPath(\'myextension\') . \'myextension_sprite.css\');
+
+		// myextension_sprite.css:
+		.t3-icon-extensions-myextension {
+		background-image:url(../../typo3conf/ext/myextension/myextension_sprite.gif);
+		}
+		.t3-icon-extensions-myextension-icon1 {	background-position: 0px 0px; }
+		.t3-icon-extensions-myextension-icon2 {	background-position: 0px -16px; }
+	</dev:highlight>
+
+	<h1>Icons currently available</h1>
+	<table class="t3-table">
+		<thead>
+			<tr>
+				<td>Preview</td>
+				<td>Sprite name</td>
+				<td>Css Class</td>
+			</tr>
+		</thead>
+		<tbody>
+			<f:for each="{sprites}" as="sprite">
+				<tr>
+					<td>
+						<f:Be.Buttons.Icon icon="{sprite}" />
+					</td>
+					<td>
+						{sprite}
+					</td>
+					<td>
+						<dev:Be.Buttons.IconClass icon="{sprite}" />
+					</td>
+				</tr>
+			</f:for>
+		</tbody>
+	</table>
+</f:section>
