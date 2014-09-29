@@ -10,6 +10,7 @@ if (TYPO3_MODE === 'BE') {
 			'Information' => 'index,listPhpInfo',
 			'Language'    => 'index',
 			'Sprite'      => 'listSpriteIcons,regenerateSkinFiles',
+			'Extension'   => 'index,upload'
 		), array(// Additional configuration
 			'access' => 'admin',
 			'icon' => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
