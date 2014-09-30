@@ -18,7 +18,13 @@ class ExtensionController extends ActionController {
 	protected $listUtility;
 
 	public function initializeView() {
-		$this->view->assign('extensions', $this->listUtility->getAvailableExtensions());
+		$extensionArray = $this->listUtility->getAvailableExtensions();
+		$extensionObjects = array();
+		foreach($extensionArray as $extension) {
+			$extensionObjects[] = (object) $extension;
+		}
+
+		$this->view->assign('extensions', $extensionObjects);
 	}
 
 	public function indexAction() {
