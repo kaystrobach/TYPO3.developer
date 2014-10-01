@@ -94,7 +94,7 @@ class ExtensionController extends ActionController {
 			$this->addFlashMessage($response, '', FlashMessage::ERROR);
 		}
 		if ($response['resultCode'] == self::TX_TER_RESULT_EXTENSIONSUCCESSFULLYUPLOADED) {
-			$this->addFlashMessage('Uploaded' . $extensionName . ' successfully', '', FlashMessage::OK);
+			$this->addFlashMessage('Uploaded extension "' . $extensionName . '" successfully', '', FlashMessage::OK);
 		}
 		$this->redirect('upload');
 	}
