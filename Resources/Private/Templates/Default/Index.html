@@ -16,6 +16,17 @@
 		</f:link.action>
 	</p>
 
+	<h2>Applicationcontext of your installation</h2>
+	<f:if condition="{context.testing}">
+		Your TYPO3 CMS is running in testing mode.
+	</f:if>
+	<f:if condition="{context.production}">
+		Your TYPO3 CMS is running in production mode.
+	</f:if>
+	<f:if condition="{context.development}">
+		Your TYPO3 CMS is running in development mode.
+	</f:if>
+
 	<h2>Status of useful extensions</h2>
 </f:section>
 
