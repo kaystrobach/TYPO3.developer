@@ -15,7 +15,7 @@ if (TYPO3_MODE === 'BE') {
 			'System'      => 'clearAllCaches,'
 		), array(// Additional configuration
 			'access' => 'admin',
-			'icon' => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
+			'icon' => 'EXT:' . $_EXTKEY . '/Resources/Public/Icons/iconmonstr-wrench-7-icon-16.png',
 			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang.xml',
 		)
 	);
