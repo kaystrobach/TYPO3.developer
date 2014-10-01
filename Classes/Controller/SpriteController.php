@@ -6,6 +6,14 @@ use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
+/**
+ * Class SpriteController
+ *
+ * does sprite related stuff
+ * mostly displaying, but also regenerating
+ *
+ * @package KayStrobach\Developer\Controller
+ */
 class SpriteController extends ActionController {
 	/**
 	 *
