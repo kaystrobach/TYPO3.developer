@@ -9,6 +9,7 @@
 namespace KayStrobach\Developer\Controller;
 
 use KayStrobach\Developer\Services\ExtractExtensionClassNameService;
+use KayStrobach\Developer\Services\Soap\TerUpload;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,6 +28,11 @@ class ExtensionController extends ActionController {
 	 * @inject
 	 */
 	protected $listUtility;
+
+	/**
+	 * indicates a successfull upload
+	 */
+	const TX_TER_RESULT_EXTENSIONSUCCESSFULLYUPLOADED = 10504;
 
 	/**
 	 * global init view to have the list of extensions available
@@ -54,7 +60,6 @@ class ExtensionController extends ActionController {
 	 * @param string $extensionName
 	 */
 	public function uploadAction($extensionName = '') {
-
 	}
 
 	/**
@@ -66,8 +71,32 @@ class ExtensionController extends ActionController {
 	 * @param string $description
 	 * @param string $version
 	 */
-	public function uploadProcessAction($extensionName, $username, $password, $description, $version) {
+	public function uploadProcessAction($extensionName, $username, $password, $description) {
+		$upload = new TerUpload();
+		$upload->setExtensionKey($extensionName)
+			->setUsername($username)
+			->setPassword($password)
+			->setUploadComment($description)
+			->setPath(ExtensionManagementUtility::extPath($extensionName));
+		try {
+			$response = $upload->execute();
+		} catch (\SoapFault $s) {
+			$this->addFlashMessage('SOAP: ' . $s->getMessage(), '', FlashMessage::ERROR);
+			$this->redirect('upload');
+			return;
+		} catch(\Exception $e) {
+			$this->addFlashMessage('Error: ' . $e->getMessage(), '', FlashMessage::ERROR);
+			$this->redirect('upload');
+			return;
+		}
 
+		if (!is_array($response)) {
+			$this->addFlashMessage($response, '', FlashMessage::ERROR);
+		}
+		if ($response['resultCode'] == self::TX_TER_RESULT_EXTENSIONSUCCESSFULLYUPLOADED) {
+			$this->addFlashMessage('Uploaded' . $extensionName . ' successfully', '', FlashMessage::OK);
+		}
+		$this->redirect('upload');
 	}
 
 	/**

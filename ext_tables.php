@@ -10,7 +10,7 @@ if (TYPO3_MODE === 'BE') {
 			'Information' => 'index,listPhpInfo,documentation',
 			'Language'    => 'index,xmlToXlf',
 			'Sprite'      => 'listSpriteIcons,regenerateSkinFiles,listTableIcons',
-			'Extension'   => 'index,upload,autoload,autoloadGenerate',
+			'Extension'   => 'index,upload,uploadProcess,autoload,autoloadGenerate',
 			'Tools'       => 'calculate,diff,cssanalyze',
 			'System'      => 'clearAllCaches,'
 		), array(// Additional configuration

@@ -6,8 +6,53 @@
 </f:section>
 
 <f:section name="Content">
-	<f:comment>
-		<f:debug>{extensions}</f:debug>
-	</f:comment>
-	<f:form.select options="{extensions}" optionLabelField="key" optionValueField="key" sortByOptionLabel="1"/>
+	<h1>
+		Upload your extension
+	</h1>
+	<f:form action="uploadProcess">
+		<table class="t3-table">
+			<tbody>
+				<tr>
+					<td>
+						Extensionkey
+					</td>
+					<td>
+						<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key" sortByOptionLabel="1"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Username
+					</td>
+					<td>
+						<f:form.textfield name="username"    placeholder="username" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Password
+					</td>
+					<td>
+						<f:form.textfield name="password"    placeholder="password" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Upload comment
+					</td>
+					<td>
+						<f:form.textfield name="description" placeholder="description"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;
+					</td>
+					<td>
+						<f:form.submit value="upload" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</f:form>
 </f:section>
