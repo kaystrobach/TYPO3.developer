@@ -1,0 +1,95 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>Diff tool</h1>
+	<link rel="stylesheet" href="{f:uri.resource(path:'Contrib/JsDiffLib/diffview.css')}">
+	<style type="text/css">
+		.diffrow textarea{
+			width: 95%;
+			height: 400px;
+			margin-left: auto;
+			margin-right: auto;
+			display:block;
+		}
+		table.diff {
+			width:100%;
+		}
+	</style>
+	<script src="{f:uri.resource(path:'Contrib/JsDiffLib/diffview.js')}"></script>
+	<script src="{f:uri.resource(path:'Contrib/JsDiffLib/difflib.js')}"></script>
+	<script type="text/javascript">
+		function diffUsingJS(viewType) {
+			"use strict";
+			var byId = function (id) { return document.getElementById(id); },
+					base = difflib.stringAsLines(byId("baseText").value),
+					newtxt = difflib.stringAsLines(byId("newText").value),
+					sm = new difflib.SequenceMatcher(base, newtxt),
+					opcodes = sm.get_opcodes(),
+					diffoutputdiv = byId("diffoutput"),
+					contextSize = byId("contextSize").value;
+
+			diffoutputdiv.innerHTML = "";
+			contextSize = contextSize || null;
+
+			diffoutputdiv.appendChild(
+				diffview.buildView(
+					{
+						baseTextLines: base,
+						newTextLines: newtxt,
+						opcodes: opcodes,
+						baseTextName: "Base Text",
+						newTextName: "New Text",
+						contextSize: contextSize,
+						viewType: viewType
+					}
+				)
+			);
+		}
+	</script>
+	<div class="top">
+
+	</div>
+	<table class="t3-table">
+		<thead>
+			<tr>
+				<td>
+					Base Text
+				</td>
+				<td>
+					New Text
+				</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="diffrow">
+				<td>
+					<textarea id="baseText"></textarea>
+				</td>
+				<td>
+					<textarea id="newText"></textarea>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<strong>Context size (optional):</strong> <input type="text" id="contextSize" value="" />
+					<button name="_viewtype" id="sidebyside" onclick="diffUsingJS(0);">
+						Side by Side Diff
+					</button>
+					<button name="_viewtype" id="inline" onclick="diffUsingJS(1);">
+						Inline Diff
+					</button>
+
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+
+	<div id="diffoutput"> </div>
+</f:section>
