@@ -20,6 +20,11 @@ class DefaultController extends ActionController {
 	 */
 	protected $extensionsToCheck = array(
 		array(
+			'key' => 'phpunit',
+			'pos' => 'with phpunit you can test your whole installation by running unit and functionaltests',
+			'neg' => 'with phpunit you can test your whole installation by running unit and functionaltests',
+		),
+		array(
 			'key' => 'styleguide',
 			'pos' => 'with styleguide you can get an insight of the backend styles',
 			'neg' => 'with styleguide you can get an insight of the backend styles',
