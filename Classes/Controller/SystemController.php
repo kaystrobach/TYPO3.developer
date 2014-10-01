@@ -20,9 +20,20 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class SystemController extends ActionController{
 	/**
-	 * really clears all caches
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @inject
 	 */
-	public function clearAllCachesAction() {
+	protected $objectManager = NULL;
 
+	/**
+	 * really clears all caches
+	 * @param bool $execute
+	 */
+	public function clearAllCachesAction($execute = TRUE) {
+		if($execute === TRUE) {
+			/** @var \TYPO3\CMS\Core\Cache\CacheManager $clearCacheService */
+			$clearCacheService = $this->objectManager->get('TYPO3\CMS\Core\Cache\CacheManager');
+			$clearCacheService->flushCaches();
+		}
 	}
 }

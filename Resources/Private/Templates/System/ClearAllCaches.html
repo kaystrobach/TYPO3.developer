@@ -5,5 +5,24 @@
 </f:section>
 
 <f:section name="Content">
-
+	<h1>
+		Clear caches
+	</h1>
+	<f:form action="clearAllCaches">
+		<div class="typo3-message message-warning">
+			<div class="message-header">
+				Attention, please use clear cache with care
+			</div>
+			<div class="message-body">
+				<p>
+					This function clears all caches registered in the system so this can have a hard impact on the performance of a live system.
+				</p>
+				<f:form.hidden name="execute" value="1" />
+				<f:form.button>
+					<f:Be.Buttons.Icon icon="actions-system-cache-clear-impact-high" />
+					Clear all Caches
+				</f:form.button>
+			</div>
+		</div>
+	</f:form>
 </f:section>
