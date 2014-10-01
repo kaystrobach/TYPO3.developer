@@ -7,7 +7,7 @@
 
 <f:section name="Content">
 	<h1>
-		Upload your extension
+		Upload your extension {extensionName}
 	</h1>
 	<f:form action="uploadProcess">
 		<table class="t3-table">
@@ -17,7 +17,7 @@
 						Extensionkey
 					</td>
 					<td>
-						<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key" sortByOptionLabel="1"/>
+						<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key" sortByOptionLabel="1" value="{extensionName}"/>
 					</td>
 				</tr>
 				<tr>
@@ -41,7 +41,7 @@
 						Upload comment
 					</td>
 					<td>
-						<f:form.textfield name="description" placeholder="description"/>
+						<f:form.textarea name="description" placeholder="description"/>
 					</td>
 				</tr>
 				<tr>

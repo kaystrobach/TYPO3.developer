@@ -60,6 +60,7 @@ class ExtensionController extends ActionController {
 	 * @param string $extensionName
 	 */
 	public function uploadAction($extensionName = '') {
+		$this->view->assign('extensionName', $extensionName);
 	}
 
 	/**
