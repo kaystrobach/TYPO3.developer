@@ -25,14 +25,25 @@
 
 						<f:be.menus.actionMenuItem label="Information:ListPhpInfoAction" controller="Information" action="listPhpInfo" />
 						<f:be.menus.actionMenuItem label="Sprite:ListSpriteIcons" controller="Sprite" action="listSpriteIcons" />
+						<f:be.menus.actionMenuItem label="Sprite:TableIcon" controller="Sprite" action="listTableIcons" />
 
 						<f:be.menus.actionMenuItem label="Extension:index" controller="Extension" action="index" />
+						<f:be.menus.actionMenuItem label="Extension:ext_autoload" controller="Extension" action="generateExtAutoload" />
+						<f:be.menus.actionMenuItem label="Extension:codingguideline" controller="Extension" action="codingGuideline" />
 						<f:be.menus.actionMenuItem label="Extension:upload" controller="Extension" action="upload" />
+
+						<f:be.menus.actionMenuItem label="Language:xmlToXlf" controller="Language" action="xmlToXlf" />
+
+						<f:be.menus.actionMenuItem label="System:clearCaches" controller="System" action="clearAllCaches" />
+
+						<f:be.menus.actionMenuItem label="Tools:cssanalyzer" controller="Tools" action="cssanalyze" />
+						<f:be.menus.actionMenuItem label="Tools:calculate" controller="Tools" action="calculate" />
+						<f:be.menus.actionMenuItem label="Tools:diff" controller="Tools" action="diff" />
 
 					</f:be.menus.actionMenu>
 				</div>
 				<div class="right">
-					<f:be.pagePath /><f:be.pageInfo />
+					Developer Extension
 				</div>
 			</div>
 			<div class="typo3-docheader-buttons">
