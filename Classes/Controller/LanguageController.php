@@ -9,5 +9,7 @@ class LanguageController extends ActionController {
 
 	}
 
+	public function xmlToXlfAction() {}
+
 
 }

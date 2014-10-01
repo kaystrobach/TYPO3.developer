@@ -25,4 +25,8 @@ class ToolsController extends ActionController{
 	public function diffAction() {
 
 	}
+
+	public function cssanalyzeAction() {
+
+	}
 } 

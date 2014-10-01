@@ -24,12 +24,13 @@
 						<f:be.menus.actionMenuItem label="Default:Index" controller="Default" action="index" />
 
 						<f:be.menus.actionMenuItem label="Information:ListPhpInfoAction" controller="Information" action="listPhpInfo" />
+						<f:be.menus.actionMenuItem label="Information:documentation" controller="Information" action="documentation" />
+
 						<f:be.menus.actionMenuItem label="Sprite:ListSpriteIcons" controller="Sprite" action="listSpriteIcons" />
 						<f:be.menus.actionMenuItem label="Sprite:TableIcon" controller="Sprite" action="listTableIcons" />
 
 						<f:be.menus.actionMenuItem label="Extension:index" controller="Extension" action="index" />
-						<f:be.menus.actionMenuItem label="Extension:ext_autoload" controller="Extension" action="generateExtAutoload" />
-						<f:be.menus.actionMenuItem label="Extension:codingguideline" controller="Extension" action="codingGuideline" />
+						<f:be.menus.actionMenuItem label="Extension:ext_autoload" controller="Extension" action="autoload" />
 						<f:be.menus.actionMenuItem label="Extension:upload" controller="Extension" action="upload" />
 
 						<f:be.menus.actionMenuItem label="Language:xmlToXlf" controller="Language" action="xmlToXlf" />
@@ -54,6 +55,7 @@
 
 	<div id="typo3-docbody">
 		<div id="typo3-inner-docbody">
+			<f:flashMessages renderMode="div"/>
 			<f:render section="Content" />
 		</div>
 	</div>

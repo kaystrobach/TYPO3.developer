@@ -1,0 +1,12 @@
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<f:for each="{tables}" as="table">
+		<h2>{table.tableName}</h2>
+		<f:format.raw>{table.rendering}</f:format.raw>
+	</f:for>
+</f:section>

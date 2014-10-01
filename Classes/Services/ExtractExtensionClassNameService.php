@@ -1,5 +1,4 @@
 <?php
-
 /*                                                                        *
  * This script is part of the TYPO3 project - inspiring people to share!  *
  *                                                                        *
@@ -16,10 +15,16 @@
 /**
  * This class contains methods to build TYPO3 autoloader registry.
  *
- * @author	Dmitry Dulepov	<dmitry@typo3.org>
+ * @author Dmitry Dulepov     <dmitry@typo3.org>
  * @author Sebastian Kurfürst <sebastian@typo3.org>
+ * @author Kay Strobach       <kay.strobach@typo3.org>
  */
-class tx_extdeveval_buildautoloadregistry {
+namespace KayStrobach\Developer\Services;
+
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+class ExtractExtensionClassNameService {
 	/**
 	 * @var array
 	 */
@@ -34,6 +39,11 @@ class tx_extdeveval_buildautoloadregistry {
 	 * @var array
 	 */
 	protected $messages = array();
+
+	/**
+	 * @var array
+	 */
+	protected $errors = array();
 
 	/**
 	 * Build the autoload registry for a given extension and place it ext_autoload.php.
@@ -58,7 +68,6 @@ class tx_extdeveval_buildautoloadregistry {
 		}
 
 		$extensionPrefix = $this->getExtensionPrefix($extensionName);
-		$errors = array();
 		foreach ($classNameToFileMapping as $className => $fileName) {
 			if ($this->isValidClassNamePrefix($className, $extensionPrefix) === FALSE) {
 				$errors[] = $className . ' does not start with Tx_' . $extensionPrefix . ', tx_' . $extensionPrefix . ' or user_' . $extensionPrefix . ' and is not added to the autoloader registry.';
@@ -67,69 +76,25 @@ class tx_extdeveval_buildautoloadregistry {
 		}
 		$autoloadFileString = $this->generateAutoloadPHPFileDataForExtension($classNameToFileMapping, $globalPrefixes);
 		if (@file_put_contents($extensionPath . 'ext_autoload.php', $autoloadFileString)) {
-			t3lib_div::fixPermissions($extensionPath . 'ext_autoload.php');
-			$errors[] = 'Wrote the following data: <pre>' . htmlspecialchars($autoloadFileString) . '</pre>';
+			GeneralUtility::fixPermissions($extensionPath . 'ext_autoload.php');
+			$this->messages[] = 'Wrote the following data: <pre>' . htmlspecialchars($autoloadFileString) . '</pre>';
 		} else {
-			$errors[] = '<b>' . $extensionPath . 'ext_autoload.php could not be written!</b>';
+			$this->errors[] = '<b>' . $extensionPath . 'ext_autoload.php could not be written!</b>';
 		}
-		return implode('<br />', $errors);
 	}
+
 	/**
-	 * Build the autoload registry for the core.
-	 * That includes:
-	 * - t3lib/
-	 * - tslib/
-	 * - the "lang" sysext
-	 *
-	 * @return	string	HTML string which should be outputted
+	 * @return array
 	 */
-	public function createAutoloadRegistryForCore() {
-		$classNameToFileMapping = array();
+	public function getErrors() {
+		return $this->errors;
+	}
 
-			// for >= TYPO3 6.0
-		if ($this->isAtLeastVersion('6.0.0')) {
-				// Defines order of variables in output file:
-			$classNameToFileMapping['t3libClasses'] = array();
-			$classNameToFileMapping['typo3Classes'] = array();
-
-			foreach (array('classes', 'interfaces') as $folder) {
-				$this->buildAutoloadRegistryForSinglePath(
-					$classNameToFileMapping['typo3Classes'],
-					PATH_typo3 . $folder . DIRECTORY_SEPARATOR, '',
-					'PATH_typo3 . \'' . $folder . DIRECTORY_SEPARATOR . '|\'',
-					FALSE
-				);
-			}
-
-			$this->buildAutoloadRegistryForSinglePath($classNameToFileMapping['typo3Classes'], PATH_typo3, '', 'PATH_typo3 . \'|\'', FALSE, 'php,inc');
-			$this->removeClasseNamesFromAutoloadRegistry($classNameToFileMapping['typo3Classes'], '#^(sc_|Typo3_Bootstrap)#i');
-			$this->removeDuplicateClasseNamesFromAutoloadRegistry($classNameToFileMapping['typo3Classes']);
-			$this->buildAutoloadRegistryForSinglePath($classNameToFileMapping['t3libClasses'], PATH_t3lib, '', 'PATH_t3lib . \'|\'');
-			$this->buildAutoloadRegistryForSinglePath($classNameToFileMapping['typo3Classes'], t3lib_extMgm::extPath('lang'), '', 't3lib_extMgm::extPath(\'lang\') . \'|\'');
-			$autoloadFileString = $this->generateAutoloadPHPFileDataForCore($classNameToFileMapping);
-
-			// for >= TYPO3 4.5
-		} elseif ($this->isExtensionCmsIncluded()) {
-			$this->buildAutoloadRegistryForSinglePath($classNameToFileMapping['t3libClasses'], PATH_t3lib, '', 'PATH_t3lib . \'|\'');
-			$this->buildAutoloadRegistryForSinglePath($classNameToFileMapping['t3libClasses'], t3lib_extMgm::extPath('lang'), '', 't3lib_extMgm::extPath(\'lang\') . \'|\'');
-			$autoloadFileString = $this->generateAutoloadPHPFileDataForCore($classNameToFileMapping);
-
-			// for < TYPO3 4.5
-		} else {
-			$this->buildAutoloadRegistryForSinglePath($classNameToFileMapping, PATH_t3lib, '', 'PATH_t3lib . \'|\'');
-			$this->buildAutoloadRegistryForSinglePath($classNameToFileMapping, PATH_tslib, '', 'PATH_tslib . \'|\'');
-			$this->buildAutoloadRegistryForSinglePath($classNameToFileMapping, t3lib_extMgm::extPath('lang'), '', 't3lib_extMgm::extPath(\'lang\') . \'|\'');
-			$autoloadFileString = $this->generateAutoloadPHPFileDataForExtension($classNameToFileMapping);
-		}
-
-		if (!count($classNameToFileMapping)) {
-			return '<b>Error. No classes found.</b>';
-		}
-		if (!@file_put_contents(PATH_t3lib . 'core_autoload.php', $autoloadFileString)) {
-			return '<b>' . PATH_t3lib . 'core_autoload.php could not be written!</b>';
-		}
-
-		return PATH_t3lib . 'core_autoload.php successfully written.' . ($this->messages ? '<br/><br/>' . implode('<br/>', $this->messages) : '');
+	/**
+	 * @return array
+	 */
+	public function getMessages() {
+		return $this->messages;
 	}
 
 	/**
@@ -156,35 +121,6 @@ class tx_extdeveval_buildautoloadregistry {
 	}
 
 	/**
-	 * Generate autoload PHP file data. Takes an associative array with class name to file mapping, and outputs it as PHP.
-	 * Does NOT escape the values in the associative array. Includes the <?php ... ?> syntax and an optional global prefix.
-	 *
-	 * @param	array	$classNameToFileMapping class name to file mapping
-	 * @return	string	The full PHP string
-	 */
-	protected function generateAutoloadPHPFileDataForCore(array $classNameToFileMapping) {
-		$output = '<?php' . PHP_EOL;
-		$output .= '// DO NOT CHANGE THIS FILE! It is automatically generated by extdeveval::buildAutoloadRegistry.' . PHP_EOL;
-		$output .= '// This file was generated on ' . date('Y-m-d H:i') . PHP_EOL;
-		$output .= PHP_EOL;
-
-		foreach ($classNameToFileMapping as $sectionName => $sectionClasses) {
-			$output .= '$' . $sectionName . ' = array(' . PHP_EOL;
-			foreach ($sectionClasses as $className => $quotedFileName) {
-				$output .= '	\'' . $className . '\' => ' . $quotedFileName . ',' . PHP_EOL;
-			}
-			$output .= ');' . PHP_EOL;
-			$output .= PHP_EOL;
-		}
-
-		$output .= '$tslibClasses = require(PATH_typo3 . \'sysext/cms/ext_autoload.php\');' . PHP_EOL;
-		$output .= PHP_EOL;
-		$output .= 'return array_merge($' . implode(', $', array_keys($classNameToFileMapping)) . ', $tslibClasses);' . PHP_EOL;
-		$output .= '?>';
-		return $output;
-	}
-
-	/**
 	 * Generate the $classNameToFileMapping for a given filePath.
 	 *
 	 * @param	array	$classNameToFileMapping	(Reference to array) All values are appended to this array.
@@ -198,8 +134,8 @@ class tx_extdeveval_buildautoloadregistry {
 	protected function buildAutoloadRegistryForSinglePath(&$classNameToFileMapping, $path, $excludeRegularExpression = '', $valueWrap = '\'|\'', $includeSubFolders = TRUE, $fileExtensionList = 'php') {
 		$recursivityLevels = ($includeSubFolders ? 99 : 0);
 
-		$extensionFileNames = t3lib_div::removePrefixPathFromList(
-			t3lib_div::getAllFilesAndFoldersInPath(
+		$extensionFileNames = GeneralUtility::removePrefixPathFromList(
+			GeneralUtility::getAllFilesAndFoldersInPath(
 				array(),
 				$path,
 				$fileExtensionList,
@@ -214,7 +150,7 @@ class tx_extdeveval_buildautoloadregistry {
 			$classNamesInFile = $this->extractClassNames($path . $extensionFileName);
 			if (!count($classNamesInFile)) continue;
 			foreach ($classNamesInFile as $className) {
-					// Register processed classes and the accordant file name:
+				// Register processed classes and the accordant file name:
 				if (!isset($this->processedClasses[strtolower($className)])
 					|| !in_array($path . $extensionFileName, $this->processedClasses[strtolower($className)])) {
 					$this->processedClasses[strtolower($className)][] = $path . $extensionFileName;
@@ -257,6 +193,26 @@ class tx_extdeveval_buildautoloadregistry {
 	}
 
 	/**
+	 * Gets the directory that holds classes.
+	 *
+	 * @param string $extensionPath full path of the extension
+	 * @return mixed The classes directory (if any) or FALSE otherwise
+	 */
+	protected function getExtensionClassesDirectory($extensionPath) {
+		$extensionClassesDirectory = FALSE;
+
+		// Check if 'Classes/' directory exists and make sure this is the proper case (workaround for
+		// insensitive file systems like HFS with default settings)
+		if (@is_dir($extensionPath . 'Classes/') && substr(realpath($extensionPath . 'Classes'), -7) === 'Classes') {
+			$extensionClassesDirectory = 'Classes/';
+		} elseif (@is_dir($extensionPath . 'classes/')) {
+			$extensionClassesDirectory = 'classes/';
+		}
+
+		return $extensionClassesDirectory;
+	}
+
+	/**
 	 * Extracts class names from the given file.
 	 *
 	 * @param	string	$filePath	File path (absolute)
@@ -282,11 +238,11 @@ class tx_extdeveval_buildautoloadregistry {
 				$token = $this->findToken($tokens, array(T_STRING), array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT));
 				if ($token === false) {
 					// unexpected end of file or token: remove found names because of parse error
-					t3lib_div::sysLog('Parse error in "' . $filePath . '".', 'Core', 2);
+					GeneralUtility::sysLog('Parse error in "' . $filePath . '".', 'Core', 2);
 					$classNames = array();
 					break;
 				}
-				$token = t3lib_div::strtolower($token);
+				$token = GeneralUtility::strtolower($token);
 				// exclude XLASS classes
 				if (strncmp($token, 'ux_', 3)) {
 					$classNames[] = $token;
@@ -360,44 +316,4 @@ class tx_extdeveval_buildautoloadregistry {
 	protected function getExtensionPrefix($extensionName) {
 		return str_replace('_', '', $extensionName);
 	}
-
-	/**
-	 * Gets the directory that holds classes.
-	 *
-	 * @param string $extensionPath full path of the extension
-	 * @return mixed The classes directory (if any) or FALSE otherwise
-	 */
-	protected function getExtensionClassesDirectory($extensionPath) {
-		$extensionClassesDirectory = FALSE;
-
-			// Check if 'Classes/' directory exists and make sure this is the proper case (workaround for
-			// insensitive file systems like HFS with default settings)
-		if (@is_dir($extensionPath . 'Classes/') && substr(realpath($extensionPath . 'Classes'), -7) === 'Classes') {
-			$extensionClassesDirectory = 'Classes/';
-		} elseif (@is_dir($extensionPath . 'classes/')) {
-			$extensionClassesDirectory = 'classes/';
-		}
-
-		return $extensionClassesDirectory;
-	}
-
-	/**
-	 * Determins whether the autoload registry of the system extension cms is included.
-	  
-	 * @return boolean
-	 */
-	protected function isExtensionCmsIncluded() {
-		return $this->isAtLeastVersion('4.5.0');
-	}
-
-	/**
-	 * Determines whether a given TYPO3 version is used.
-	 *
-	 * @param string $version
-	 * @return boolean
-	 */
-	protected function isAtLeastVersion($version) {
-		return (Tx_Extdeveval_Compatibility::convertVersionNumberToInteger(TYPO3_version) >= Tx_Extdeveval_Compatibility::convertVersionNumberToInteger($version));
-	}
-}
-?>
+} 

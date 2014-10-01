@@ -7,11 +7,12 @@ if (TYPO3_MODE === 'BE') {
 		'', // Position of the module
 		array(// Allowed controller action combinations
 			'Default'     => 'index',
-			'Information' => 'index,listPhpInfo',
-			'Language'    => 'index',
-			'Sprite'      => 'listSpriteIcons,regenerateSkinFiles',
-			'Extension'   => 'index,upload',
-			'Tools'       => 'calculate,diff',
+			'Information' => 'index,listPhpInfo,documentation',
+			'Language'    => 'index,xmlToXlf',
+			'Sprite'      => 'listSpriteIcons,regenerateSkinFiles,listTableIcons',
+			'Extension'   => 'index,upload,autoload,autoloadGenerate',
+			'Tools'       => 'calculate,diff,cssanalyze',
+			'System'      => 'clearAllCaches,'
 		), array(// Additional configuration
 			'access' => 'admin',
 			'icon' => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
