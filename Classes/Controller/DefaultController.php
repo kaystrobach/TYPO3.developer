@@ -20,9 +20,9 @@ class DefaultController extends ActionController {
 	 */
 	protected $extensionsToCheck = array(
 		array(
-			'key' => 'sphinx',
-			'pos' => 'with sphinx you can render your documentation',
-			'neg' => 'with sphinx you can render your documentation',
+			'key' => 'styleguide',
+			'pos' => 'with styleguide you can get an insight of the backend styles',
+			'neg' => 'with styleguide you can get an insight of the backend styles',
 		),
 		array(
 			'key' => 'extension_builder',
@@ -30,9 +30,14 @@ class DefaultController extends ActionController {
 			'neg' => 'with the extension_builder you can easily kickstart extbase extensions',
 		),
 		array(
-			'key' => 'styleguide',
-			'pos' => 'with styleguide you can get an insight of the backend styles',
-			'neg' => 'with styleguide you can get an insight of the backend styles',
+			'key' => 'sphinx',
+			'pos' => 'with sphinx you can render your documentation',
+			'neg' => 'with sphinx you can render your documentation',
+		),
+		array(
+			'key' => 'devlog',
+			'pos' => 'with devlog it´s easier to see what your code is doing by using t3lib_div::devlog() or Generalutility::devlog()',
+			'neg' => 'with devlog it´s easier to see what your code is doing by using t3lib_div::devlog() or Generalutility::devlog()',
 		),
 		array(
 			'key' => 'kickstarter',
