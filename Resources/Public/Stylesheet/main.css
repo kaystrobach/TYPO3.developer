@@ -1,0 +1,7 @@
+.expandField {
+	width: 80%;
+}
+
+textarea.expandField {
+	height: 100px;
+}
