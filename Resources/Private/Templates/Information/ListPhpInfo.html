@@ -1,3 +1,5 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="Buttons">
@@ -5,13 +7,18 @@
 </f:section>
 
 <f:section name="Content">
-	<div>
-		<f:format.raw>
-			{phpinfo}
-		</f:format.raw>
-	</div>
+	<h1>PHP Information</h1>
+	<h2>Sections</h2>
+	<ul>
+		<f:for each="{information}" as="section" key="sectionName">
+			<li>
+				<a href="#{dev:md5(value:sectionName)}">{sectionName}</a>
+			</li>
+		</f:for>
+	</ul>
+	<h2>Data</h2>
 	<f:for each="{information}" as="section" key="sectionName">
-		<h2>{sectionName}</h2>
+		<h3 id="{dev:md5(value:sectionName)}">{sectionName}</h3>
 		<table class="t3-table">
 			<col width="33%">
 			<col width="33%">
@@ -31,17 +38,19 @@
 			</thead>
 			<tbody>
 				<f:for each="{section}" as="value" key="key">
-					<tr>
-						<td>
-							{key}
-						</td>
-						<td>
-							<f:format.raw>{value.0}</f:format.raw>
-						</td>
-						<td>
-							<f:format.raw>{value.1}</f:format.raw>
-						</td>
-					</tr>
+					<f:if condition="{value.0}">
+						<tr>
+							<td>
+								{key}
+							</td>
+							<td>
+								<f:format.raw>{value.0}</f:format.raw>
+							</td>
+							<td>
+								<f:format.raw>{value.1}</f:format.raw>
+							</td>
+						</tr>
+					</f:if>
 				</f:for>
 			</tbody>
 		</table>
