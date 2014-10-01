@@ -3,20 +3,17 @@
 <f:layout name="Default" />
 
 <f:section name="Buttons">
-
+	<select onchange="jumpToUrl(this.options[this.selectedIndex].value, this);">
+		<f:for each="{information}" as="section" key="sectionName">
+			<option value="#{dev:md5(value:sectionName)}">
+				{sectionName}
+			</option>
+		</f:for>
+	</select>
 </f:section>
 
 <f:section name="Content">
 	<h1>PHP Information</h1>
-	<h2>Sections</h2>
-	<ul>
-		<f:for each="{information}" as="section" key="sectionName">
-			<li>
-				<a href="#{dev:md5(value:sectionName)}">{sectionName}</a>
-			</li>
-		</f:for>
-	</ul>
-	<h2>Data</h2>
 	<f:for each="{information}" as="section" key="sectionName">
 		<h3 id="{dev:md5(value:sectionName)}">{sectionName}</h3>
 		<table class="t3-table">
