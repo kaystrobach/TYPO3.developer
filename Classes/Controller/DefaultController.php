@@ -62,11 +62,17 @@ class DefaultController extends ActionController {
 	 * default action and welcome screen
 	 */
 	public function indexAction() {
-		foreach($this->extensionsToCheck as $extension) {
+		foreach ($this->extensionsToCheck as $extension) {
 			$this->checkExtensionInstalled($extension['key'], $extension['pos'], $extension['neg']);
 		}
-		$this->view->assign('applicationContext', GeneralUtility::getApplicationContext());
 
+		if (function_exists('xdebug_call_line')) {
+			$this->addFlashMessage('with XDebug you can take a look into the settings in the phpinfo module, please refer to your IDE help to get setup instructions.', 'PHP Extension XDebug installed', FlashMessage::OK);
+		} else {
+			$this->addFlashMessage('You should install the PHP Extension Xdebug to make debugging your application easier.', 'PHP Extension XDebug NOT installed', FlashMessage::WARNING);
+		}
+
+		$this->view->assign('applicationContext', GeneralUtility::getApplicationContext());
 		$this->view->assign('configurationContext', $this->getConfigurationPreset());
 	}
 
@@ -74,19 +80,19 @@ class DefaultController extends ActionController {
 		$features       = $this->featureManager->getInitializedFeatures(array());
 		/** @var \TYPO3\CMS\Install\Configuration\Context\ContextFeature $contextPreset */
 		$contextFeature = NULL;
-		foreach($features as $feature) {
-			if($feature instanceof \TYPO3\CMS\Install\Configuration\Context\ContextFeature) {
+		foreach ($features as $feature) {
+			if ($feature instanceof \TYPO3\CMS\Install\Configuration\Context\ContextFeature) {
 				$contextFeature = $feature;
 				continue;
 			}
 		}
-		if($contextFeature === NULL) {
+		if ($contextFeature === NULL) {
 			return NULL;
 		}
 		$presets = $contextFeature->getPresetsOrderedByPriority();
-		foreach($presets as $preset) {
+		foreach ($presets as $preset) {
 			/** @var \TYPO3\CMS\Install\Configuration\AbstractPreset $preset */
-			if($preset->isActive()) {
+			if ($preset->isActive()) {
 				return $preset;
 			}
 		}
