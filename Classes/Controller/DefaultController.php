@@ -54,6 +54,10 @@ class DefaultController extends ActionController {
 			'key' => 'kickstarter',
 			'description' => 'with the kickstarter you can start new piBase plugins, be aware that this extension may not work in 6.2',
 		),
+		array(
+			'key' => 'additional_reports',
+			'description' => 'Useful informations in the reports module : xclass, ajax, cliKeys, eID, general status of the system (encoding, DB, php vars...), hooks, compare local and TER extension (diff), used content type, used plugins, ExtDirect... It can really help you during migration or new existing project (to have a global reports of the system).',
+		),
 	);
 
 	protected $phpExtensionsToCheck = array(
