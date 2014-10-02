@@ -1,3 +1,5 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="Buttons">
@@ -5,56 +7,155 @@
 </f:section>
 
 <f:section name="BeforeContent">
-	<h1>Extension Developer</h1>
 
-		<p>Welcome to the extension developer, hope you have fun creating your own extensions.</p>
-
-		<p>
-			<f:link.action action="documentation" controller="Information">
-			If you just started to digg into TYPO3 CMS extension development, please start in the
-			documentation section to learn best practice.
-			</f:link.action>
-		</p>
-
-	<h2>Application context</h2>
-		<table class="t3-table">
-			<tbody>
-				<tr>
-					<td>
-						application context
-					</td>
-					<td>
-						<f:if condition="{applicationContext.testing}">
-							<b>Testing</b>
-						</f:if>
-						<f:if condition="{applicationContext.production}">
-							<b>Production</b>
-						</f:if>
-						<f:if condition="{applicationContext.development}">
-							<b>Development</b>
-						</f:if>
-					</td>
-					<td>
-						The application context can be set by an environment variable.
-					</td>
-				</tr>
-				<tr>
-					<td>
-						selected configuration preset
-					</td>
-					<td>
-						<b>{configurationContext.name}</b>
-					</td>
-					<td>
-						It's possible to set configuration presets in the installtool for either production or development mode.
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-	<h2>Status of useful extensions</h2>
 </f:section>
 
 <f:section name="Content">
+	<h1>Extension Developer</h1>
 
+	<p>Welcome to the extension developer, hope you have fun creating your own extensions.</p>
+
+	<p>
+		<f:link.action action="documentation" controller="Information">
+			If you just started to digg into TYPO3 CMS extension development, please start in the
+			documentation section to learn best practice.
+		</f:link.action>
+	</p>
+
+	<h2>Application context</h2>
+	<table class="t3-table">
+		<tbody>
+		<tr>
+			<td>
+				application context
+			</td>
+			<td>
+				<f:if condition="{applicationContext.testing}">
+					<b>Testing</b>
+				</f:if>
+				<f:if condition="{applicationContext.production}">
+					<b>Production</b>
+				</f:if>
+				<f:if condition="{applicationContext.development}">
+					<b>Development</b>
+				</f:if>
+			</td>
+			<td>
+				The application context can be set by an environment variable.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				selected configuration preset
+			</td>
+			<td>
+				<b>{configurationContext.name}</b>
+			</td>
+			<td>
+				It's possible to set configuration presets in the installtool for either production or development mode.
+			</td>
+		</tr>
+		</tbody>
+	</table>
+
+	<h2>Status of useful TYPO3 extensions</h2>
+
+	<small>To enable these extension, please use the extensionmanager.</small>
+
+	<table class="t3-table">
+		<f:for each="{extensions}" as="extension">
+			<tr>
+				<td>
+					<dev:extension.IfInstalled extensionName="{extension.key}">
+						<f:then>
+							<f:Be.Buttons.Icon icon="actions-system-extension-uninstall" />
+						</f:then>
+						<f:else>
+							<f:Be.Buttons.Icon icon="actions-system-extension-install" />
+						</f:else>
+					</dev:extension.IfInstalled>
+
+				</td>
+				<td>
+					{extension.key}
+				</td>
+				<td>
+					{extension.description}
+				</td>
+				<td>
+					<dev:extension.IfInstalled extensionName="{extension.key}">
+						<f:then>
+
+						</f:then>
+						<f:else>
+							composer require --dev typo3-ter/{extension.key}
+						</f:else>
+					</dev:extension.IfInstalled>
+				</td>
+			</tr>
+		</f:for>
+	</table>
+
+	<h2>Status of useful composer packages</h2>
+
+	<small>To enable these packages, please use composer.</small>
+
+	<table class="t3-table">
+		<f:for each="{composerPackages}" as="extension">
+			<tr>
+				<td>
+					<dev:package.IfInstalled package="{extension.key}">
+						<f:then>
+							<f:Be.Buttons.Icon icon="actions-system-extension-uninstall" />
+						</f:then>
+						<f:else>
+							<f:Be.Buttons.Icon icon="actions-system-extension-install" />
+						</f:else>
+					</dev:package.IfInstalled>
+				</td>
+				<td>
+					{extension.key}
+				</td>
+				<td>
+					{extension.description}
+				</td>
+				<td>
+					<dev:package.IfInstalled package="{extension.key}">
+						<f:then></f:then>
+						<f:else>
+							composer require --dev {extension.key}
+						</f:else>
+					</dev:package.IfInstalled>
+				</td>
+			</tr>
+		</f:for>
+	</table>
+
+	<h2>Status of useful PHP extensions</h2>
+
+	<small>To enable these extension, please adjust your php settings.</small>
+
+	<table class="t3-table">
+		<f:for each="{phpExtensions}" as="extension">
+			<tr>
+				<td>
+					<dev:extension.FunctionExists function="{extension.function}">
+						<f:then>
+							<f:Be.Buttons.Icon icon="actions-system-extension-uninstall" />
+						</f:then>
+						<f:else>
+							<f:Be.Buttons.Icon icon="actions-system-extension-install" />
+						</f:else>
+					</dev:extension.FunctionExists>
+
+				</td>
+				<td>
+					{extension.key}
+				</td>
+				<td>
+					{extension.description}
+				</td>
+			</tr>
+		</f:for>
+	</table>
 </f:section>

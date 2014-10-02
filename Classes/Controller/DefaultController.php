@@ -27,34 +27,47 @@ class DefaultController extends ActionController {
 	 */
 	protected $extensionsToCheck = array(
 		array(
-			'key' => 'phpunit',
-			'pos' => 'with phpunit you can test your whole installation by running unit and functionaltests',
-			'neg' => 'with phpunit you can test your whole installation by running unit and functionaltests',
-		),
-		array(
 			'key' => 'styleguide',
-			'pos' => 'with styleguide you can get an insight of the backend styles',
-			'neg' => 'with styleguide you can get an insight of the backend styles',
+			'description' => 'with styleguide you can get an insight of the backend styles',
 		),
 		array(
 			'key' => 'extension_builder',
-			'pos' => 'with the extension_builder you can easily kickstart extbase extensions',
-			'neg' => 'with the extension_builder you can easily kickstart extbase extensions',
+			'description' => 'with the extension_builder you can easily kickstart extbase extensions',
 		),
 		array(
-			'key' => 'sphinx',
-			'pos' => 'with sphinx you can render your documentation',
-			'neg' => 'with sphinx you can render your documentation',
+			'key' => 'builder',
+			'description' => 'with builder you get various development supports for building and working with Fluid templates and Extbase extensions',
 		),
 		array(
 			'key' => 'devlog',
-			'pos' => 'with devlog it´s easier to see what your code is doing by using t3lib_div::devlog() or Generalutility::devlog()',
-			'neg' => 'with devlog it´s easier to see what your code is doing by using t3lib_div::devlog() or Generalutility::devlog()',
+			'description' => 'with devlog it´s easier to see what your code is doing by using t3lib_div::devlog() or Generalutility::devlog()',
+		),
+		array(
+			'key' => 'sphinx',
+			'description' => 'with sphinx you can render your documentation',
+		),
+		array(
+			'key' => 'uncache',
+			'description' => 'with uncache all caches are prevented and disabled. NOT FOR PRODUCTION USE!',
 		),
 		array(
 			'key' => 'kickstarter',
-			'pos' => 'with the kickstarter you can start new piBase plugins, be aware that this extension may not work in 6.2',
-			'neg' => 'with the kickstarter you can start new piBase plugins, be aware that the working version of this extension is not available in TER, but via Github https://github.com/mneuhaus/TYPO3-Kickstarter',
+			'description' => 'with the kickstarter you can start new piBase plugins, be aware that this extension may not work in 6.2',
+		),
+	);
+
+	protected $phpExtensionsToCheck = array(
+		array(
+			'key' => 'xdebug',
+			'function' => 'xdebug_call_line',
+			'description' => 'with XDebug you can take a look into the settings in the phpinfo module, please refer to your IDE help to get setup instructions.',
+		),
+	);
+
+	protected $composerPackagesToCheck = array(
+		array(
+			'key' => 'phpunit/phpunit',
+			'description' => 'with phpunit you can test your whole installation by running unit and functionaltests',
 		),
 	);
 
@@ -62,15 +75,10 @@ class DefaultController extends ActionController {
 	 * default action and welcome screen
 	 */
 	public function indexAction() {
-		foreach ($this->extensionsToCheck as $extension) {
-			$this->checkExtensionInstalled($extension['key'], $extension['pos'], $extension['neg']);
-		}
 
-		if (function_exists('xdebug_call_line')) {
-			$this->addFlashMessage('with XDebug you can take a look into the settings in the phpinfo module, please refer to your IDE help to get setup instructions.', 'PHP Extension XDebug installed', FlashMessage::OK);
-		} else {
-			$this->addFlashMessage('You should install the PHP Extension Xdebug to make debugging your application easier.', 'PHP Extension XDebug NOT installed', FlashMessage::WARNING);
-		}
+		$this->view->assign('extensions', $this->extensionsToCheck);
+		$this->view->assign('phpExtensions', $this->phpExtensionsToCheck);
+		$this->view->assign('composerPackages', $this->composerPackagesToCheck);
 
 		$this->view->assign('applicationContext', GeneralUtility::getApplicationContext());
 		$this->view->assign('configurationContext', $this->getConfigurationPreset());
@@ -95,21 +103,6 @@ class DefaultController extends ActionController {
 			if ($preset->isActive()) {
 				return $preset;
 			}
-		}
-	}
-
-	/**
-	 * Wrapper for checking the extension state and displaying a flashmessage
-	 *
-	 * @param $extensionName
-	 * @param $positiveMessage
-	 * @param $negativeMessage
-	 */
-	protected function checkExtensionInstalled($extensionName, $positiveMessage, $negativeMessage) {
-		if(ExtensionManagementUtility::isLoaded($extensionName, FALSE)) {
-			$this->addFlashMessage($positiveMessage, 'Extension ' . $extensionName . ' installed', FlashMessage::OK);
-		} else {
-			$this->addFlashMessage($negativeMessage, 'Extension ' . $extensionName . ' NOT installed', FlashMessage::WARNING);
 		}
 	}
 }
