@@ -7,7 +7,7 @@ if (TYPO3_MODE === 'BE') {
 		'', // Position of the module
 		array(// Allowed controller action combinations
 			'Default'     => 'index',
-			'Information' => 'index,listPhpInfo,documentation',
+			'Information' => 'index,listPhpInfo,documentation,hooks',
 			'Language'    => 'index,xmlToXlf',
 			'Sprite'      => 'listSpriteIcons,regenerateSkinFiles,listTableIcons',
 			'Extension'   => 'index,upload,uploadProcess,autoload,autoloadGenerate',

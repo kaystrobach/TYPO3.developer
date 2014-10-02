@@ -27,4 +27,11 @@ class InformationController extends ActionController {
 
 	}
 
+	/**
+	 *
+	 */
+	public function hooksAction() {
+		$this->view->assign('hooks', $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']);
+	}
+
 }

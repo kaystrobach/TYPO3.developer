@@ -1,0 +1,36 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>Registered Hooks</h1>
+
+	<p>
+		Hooks are displayed via the output of the array $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']
+	</p>
+
+	<table class="t3-table">
+		<tbody>
+			<f:for each="{hooks}" as="hook" key="hookName">
+				<tr>
+					<td>
+						{hookName}
+					</td>
+					<td>
+						<ul>
+							<f:for each="{hook}" as="hookListener">
+								<li>
+									<dev:printr value="{hookListener}" />
+								</li>
+							</f:for>
+						</ul>
+					</td>
+				</tr>
+			</f:for>
+		</tbody>
+	</table>
+</f:section>
