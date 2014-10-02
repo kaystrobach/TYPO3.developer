@@ -7,25 +7,50 @@
 <f:section name="BeforeContent">
 	<h1>Extension Developer</h1>
 
-	<p>Welcome to the extension developer, hope you have fun creating your own extensions.</p>
+		<p>Welcome to the extension developer, hope you have fun creating your own extensions.</p>
 
-	<p>
-		<f:link.action action="documentation" controller="Information">
-		If you just started to digg into TYPO3 CMS extension development, please start in the
-		documentation section to learn best practice.
-		</f:link.action>
-	</p>
+		<p>
+			<f:link.action action="documentation" controller="Information">
+			If you just started to digg into TYPO3 CMS extension development, please start in the
+			documentation section to learn best practice.
+			</f:link.action>
+		</p>
 
-	<h2>Applicationcontext of your installation</h2>
-	<f:if condition="{context.testing}">
-		Your TYPO3 CMS is running in testing mode.
-	</f:if>
-	<f:if condition="{context.production}">
-		Your TYPO3 CMS is running in production mode.
-	</f:if>
-	<f:if condition="{context.development}">
-		Your TYPO3 CMS is running in development mode.
-	</f:if>
+	<h2>Application context</h2>
+		<table class="t3-table">
+			<tbody>
+				<tr>
+					<td>
+						application context
+					</td>
+					<td>
+						<f:if condition="{applicationContext.testing}">
+							<b>Testing</b>
+						</f:if>
+						<f:if condition="{applicationContext.production}">
+							<b>Production</b>
+						</f:if>
+						<f:if condition="{applicationContext.development}">
+							<b>Development</b>
+						</f:if>
+					</td>
+					<td>
+						The application context can be set by an environment variable.
+					</td>
+				</tr>
+				<tr>
+					<td>
+						selected configuration preset
+					</td>
+					<td>
+						<b>{configurationContext.name}</b>
+					</td>
+					<td>
+						It's possible to set configuration presets in the installtool for either production or development mode.
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
 	<h2>Status of useful extensions</h2>
 </f:section>

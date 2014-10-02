@@ -16,6 +16,12 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class DefaultController extends ActionController {
 	/**
+	 * @var \TYPO3\CMS\Install\Configuration\FeatureManager
+	 * @inject
+	 */
+	protected $featureManager;
+
+	/**
 	 * list of extensions to be checked on welcome screen
 	 * @var array
 	 */
@@ -48,7 +54,7 @@ class DefaultController extends ActionController {
 		array(
 			'key' => 'kickstarter',
 			'pos' => 'with the kickstarter you can start new piBase plugins, be aware that this extension may not work in 6.2',
-			'neg' => 'with the kickstarter you can start new piBase plugins, be aware that this extension may not work in 6.2',
+			'neg' => 'with the kickstarter you can start new piBase plugins, be aware that the working version of this extension is not available in TER, but via Github https://github.com/mneuhaus/TYPO3-Kickstarter',
 		),
 	);
 
@@ -61,6 +67,29 @@ class DefaultController extends ActionController {
 		}
 		$this->view->assign('applicationContext', GeneralUtility::getApplicationContext());
 
+		$this->view->assign('configurationContext', $this->getConfigurationPreset());
+	}
+
+	protected function getConfigurationPreset() {
+		$features       = $this->featureManager->getInitializedFeatures(array());
+		/** @var \TYPO3\CMS\Install\Configuration\Context\ContextFeature $contextPreset */
+		$contextFeature = NULL;
+		foreach($features as $feature) {
+			if($feature instanceof \TYPO3\CMS\Install\Configuration\Context\ContextFeature) {
+				$contextFeature = $feature;
+				continue;
+			}
+		}
+		if($contextFeature === NULL) {
+			return NULL;
+		}
+		$presets = $contextFeature->getPresetsOrderedByPriority();
+		foreach($presets as $preset) {
+			/** @var \TYPO3\CMS\Install\Configuration\AbstractPreset $preset */
+			if($preset->isActive()) {
+				return $preset;
+			}
+		}
 	}
 
 	/**
