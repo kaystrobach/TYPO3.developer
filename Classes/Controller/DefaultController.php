@@ -73,6 +73,26 @@ class DefaultController extends ActionController {
 			'key' => 'phpunit/phpunit',
 			'description' => 'with phpunit you can test your whole installation by running unit and functionaltests',
 		),
+		array(
+			'key' => 'typo3-ci/typo3cms',
+			'description' => 'CodeSniffing for TYPO3 CMS CGL, includes phpcs/phpcs as dependency'
+		),
+		array(
+			'key' => 'sebastian/phpcpd',
+			'description' => 'phpcpd is a Copy/Paste Detector (CPD) for PHP code.',
+		),
+		array(
+			'key' => 'phpmd/phpmd',
+			'description' => 'finds mess in your Code, Possible bugs, Suboptimal code, Overcomplicated expressions, Unused parameters, methods, properties'
+		),
+		array(
+			'key' => 'pdepend/pdepend',
+			'description' => 'PHP Depend can generate a large set of software metrics from a given code base, these values can be used to measure the quality of a software project and they help to identify that parts of an application where a refactoring should be applied.'
+		),
+		array(
+			'key' => 'mayflower/php-codebrowser',
+			'description' => 'Generates a browsable representation of PHP code where sections with violations found by quality assurance tools such as PHP_CodeSniffer or PHPMD are highlighted.'
+		)
 	);
 
 	/**

@@ -14,6 +14,8 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use KayStrobach\Developer\Utility\ShellCaptureUtility;
+
 
 /**
  * Class ExtensionController
@@ -126,5 +128,27 @@ class ExtensionController extends ActionController {
 		}
 
 		$this->redirect('autoload');
+	}
+
+
+	/**
+	 * @param string $extensionName
+	 * @param string $path
+	 */
+	public function codestylecheckAction($extensionName = '', $path = '') {
+		$cleanedPath = NULL;
+		if($extensionName) {
+			$cleanedPath = ExtensionManagementUtility::extPath($extensionName);
+		} elseif(is_dir($path)) {
+			$cleanedPath = $path;
+		}
+
+		if($cleanedPath !== NULL) {
+			$command = PATH_site . 'bin/phpcs --standard=TYPO3CMS -n ' . $cleanedPath;
+			$this->view->assign('command', $command);
+			$this->view->assign('raw', ShellCaptureUtility::execute($command));
+		}
+
+		$this->view->assign('extensionName', $extensionName);
 	}
 } 

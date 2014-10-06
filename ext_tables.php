@@ -10,8 +10,8 @@ if (TYPO3_MODE === 'BE') {
 			'Information' => 'index,listPhpInfo,documentation,hooks',
 			'Language'    => 'index,xmlToXlf',
 			'Sprite'      => 'listSpriteIcons,regenerateSkinFiles,listTableIcons',
-			'Extension'   => 'index,upload,uploadProcess,autoload,autoloadGenerate',
-			'Tools'       => 'calculate,diff,cssanalyze',
+			'Extension'   => 'index,upload,uploadProcess,autoload,autoloadGenerate,codestylecheck',
+			'Tools'       => 'calculate,diff,,cssanalyze',
 			'System'      => 'clearAllCaches,'
 		), array(// Additional configuration
 			'access' => 'admin',

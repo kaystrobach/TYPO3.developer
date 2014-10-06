@@ -1,0 +1,49 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>Check Coding Guidelines on extensions</h1>
+	<dev:package.IfInstalled package="typo3-ci/typo3cms">
+		<f:then>
+			<f:form action="codestylecheck">
+				<table class="t3-table">
+					<tbody>
+						<tr>
+							<td>
+								Extension
+							</td>
+							<td>
+								<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key" sortByOptionLabel="1" value="{extensionName}" class="expandField"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								<f:form.button>
+									Run Check
+								</f:form.button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</f:form>
+		</f:then>
+		<f:else>
+			<dev:flashMessage title="Package is Missing">
+				This module is not useable without the composer package "typo3-ci/typo3cms"!
+			</dev:flashMessage>
+		</f:else>
+	</dev:package.IfInstalled>
+	<f:if condition="{raw}">
+		<h2>Command</h2>
+		<pre>{command}</pre>
+		<h2>Output</h2>
+		<pre>{raw}</pre>
+	</f:if>
+</f:section>
