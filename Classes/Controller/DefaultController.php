@@ -58,6 +58,10 @@ class DefaultController extends ActionController {
 			'key' => 'additional_reports',
 			'description' => 'Useful informations in the reports module : xclass, ajax, cliKeys, eID, general status of the system (encoding, DB, php vars...), hooks, compare local and TER extension (diff), used content type, used plugins, ExtDirect... It can really help you during migration or new existing project (to have a global reports of the system).',
 		),
+		array(
+			'key' => 't3adminer',
+			'description' => 'SQL Administration tool, which is similar to PHPMyAdmin but well integrated and faster. And due to a well done integration less risky then having phpmyadmin installed in TYPO3.',
+		),
 	);
 
 	protected $phpExtensionsToCheck = array(
