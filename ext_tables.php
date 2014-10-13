@@ -20,3 +20,13 @@ if (TYPO3_MODE === 'BE') {
 		)
 	);
 }
+
+/**
+ * add sprites
+ */
+\TYPO3\CMS\Backend\Sprite\SpriteManager::addSingleIcons(
+	array(
+		'wrench' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/iconmonstr-wrench-7-icon-16.png',
+	),
+	$_EXTKEY
+);

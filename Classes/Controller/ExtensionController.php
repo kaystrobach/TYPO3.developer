@@ -50,10 +50,10 @@ class ExtensionController extends ActionController {
 	}
 
 	/**
-	 * default action
+	 * @param string $extensionName
 	 */
-	public function indexAction() {
-
+	public function indexAction($extensionName = '') {
+		$this->view->assign('extensionName', $extensionName);
 	}
 
 	/**
