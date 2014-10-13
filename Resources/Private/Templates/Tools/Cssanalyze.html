@@ -6,5 +6,36 @@
 </f:section>
 
 <f:section name="Content">
+	<h1>Analyze your HTML and get the CSS selectors</h1>
+	<f:form action="cssanalyze">
+		<table class="t3-table">
+			<tbody>
+				<tr>
+					<td>
+						source code
+					</td>
+					<td>
+						<f:form.textarea name="sourceCode" value="{sourceCode}" class="expandField"></f:form.textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;
+					</td>
+					<td>
+						<f:form.button>Analyze</f:form.button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
+		<f:if condition="{result}">
+			<h2>Found Selectors</h2>
+			<ul>
+				<f:for each="{result.selectors}" as="selector">
+					<li>{selector}</li>
+				</f:for>
+			</ul>
+		</f:if>
+	</f:form>
 </f:section>

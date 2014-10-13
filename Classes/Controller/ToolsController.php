@@ -9,6 +9,7 @@
 namespace KayStrobach\Developer\Controller;
 
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -35,8 +36,17 @@ class ToolsController extends ActionController{
 
 	/**
 	 * analyze css
+	 * @param string $sourceCode
 	 */
-	public function cssanalyzeAction() {
-
+	public function cssanalyzeAction($sourceCode = NULL) {
+		$this->view->assign('sourceCode', $sourceCode);
+		if($sourceCode !== NULL) {
+			/** @var \KayStrobach\Developer\Services\CssAnalyzeService $cssAnalyzeService */
+			$cssAnalyzeService = GeneralUtility::makeInstance('KayStrobach\Developer\Services\CssAnalyzeService');
+			$this->view->assign(
+				'result',
+				$cssAnalyzeService->getHierarchy($sourceCode)
+			);
+		}
 	}
 } 
