@@ -21,13 +21,7 @@
 						{hookName}
 					</td>
 					<td>
-						<ul>
-							<f:for each="{hook}" as="hookListener">
-								<li>
-									<dev:printr value="{hookListener}" />
-								</li>
-							</f:for>
-						</ul>
+						<dev:Debug.viewArray value="{hook}" />
 					</td>
 				</tr>
 			</f:for>
