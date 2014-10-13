@@ -113,7 +113,7 @@ class DefaultController extends ActionController {
 	}
 
 	protected function getConfigurationPreset() {
-		$features       = $this->featureManager->getInitializedFeatures(array());
+		$features = $this->featureManager->getInitializedFeatures(array());
 		/** @var \TYPO3\CMS\Install\Configuration\Context\ContextFeature $contextPreset */
 		$contextFeature = NULL;
 		foreach ($features as $feature) {
