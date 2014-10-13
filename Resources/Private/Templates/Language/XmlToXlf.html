@@ -1,3 +1,4 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="Buttons">
@@ -5,5 +6,37 @@
 </f:section>
 
 <f:section name="Content">
+	<h1>XML to XLF converter</h1>
+	<p>
+		To select a file, please create a storage, which points to the typo3conf folder.<br>
+		<a href="https://forge.typo3.org/issues/62196" target="_blank">
+			Due to a bug in the FAL implementation you need to make the storage writeable.
+		</a>
+	</p>
+	<f:form action="xmlToXlf" name="test">
+		<table class="t3-table">
+			<tbody>
+				<tr>
+					<td>
+						fal file reference
+					</td>
+					<td>
+						<f:form.textfield type="text" name="fileReferenceId" value="{fileReferenceId}" />
+						<dev:Be.Link.ModuleWizard moduleName='wizard_element_browser' formName="test" formField="tx_developer_tools_developermod1[fileReferenceId]" jsOptions="width=600,height=500" icon="apps-filetree-folder-default"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;
+					</td>
+					<td>
+						<f:form.button>Convert the selected File</f:form.button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+	</f:form>
 
 </f:section>
