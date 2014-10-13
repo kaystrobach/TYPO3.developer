@@ -1,0 +1,48 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>Registered Signal Listeners</h1>
+
+	<p>
+		Signals are collected from \TYPO3\CMS\Extbase\SignalSlot\Dispatcher->slots
+	</p>
+
+	<table class="t3-table">
+		<thead>
+			<tr>
+				<td>class</td>
+				<td>signal</td>
+				<td>listeners</td>
+			</tr>
+		</thead>
+		<tbody>
+			<f:for each="{classes}" as="signals" key="className">
+				<f:for each="{signals}" as="listeners" key="signalName">
+					<tr>
+						<td>
+							{className}
+						</td>
+						<td>
+							{signalName}
+						</td>
+						<td>
+							<ul>
+								<f:for each="{listeners}" as="signalListener">
+									<li>
+										<dev:printr value="{signalListener}" />
+									</li>
+								</f:for>
+							</ul>
+						</td>
+					</tr>
+				</f:for>
+			</f:for>
+		</tbody>
+	</table>
+</f:section>

@@ -14,6 +14,12 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class InformationController extends ActionController {
 	/**
+	 * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+	 * @inject
+	 */
+	protected $signalSlotDispatcher;
+
+	/**
 	 * show phpinfo
 	 */
 	public function listPhpInfoAction() {
@@ -32,6 +38,13 @@ class InformationController extends ActionController {
 	 */
 	public function hooksAction() {
 		$this->view->assign('hooks', $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']);
+	}
+
+	public function signalsAction() {
+		$reflection = new \ReflectionClass($this->signalSlotDispatcher);
+		$attribute = $reflection->getProperty('slots');
+		$attribute->setAccessible(TRUE);
+		$this->view->assign('classes', $attribute->getValue($this->signalSlotDispatcher));
 	}
 
 }
