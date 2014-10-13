@@ -21,8 +21,10 @@
 						fal file reference
 					</td>
 					<td>
-						<f:form.textfield type="text" name="fileReferenceId" value="{fileReferenceId}" />
-						<dev:Be.Link.ModuleWizard moduleName='wizard_element_browser' formName="test" formField="tx_developer_tools_developermod1[fileReferenceId]" jsOptions="width=600,height=500" icon="apps-filetree-folder-default"/>
+						<f:form.textfield type="text" name="fileReferenceId" value="{fileReferenceId}" readonly="readonly"/>
+						<dev:Be.Link.ModuleWizard moduleName='wizard_element_browser' formName="test" formField="tx_developer_tools_developermod1[fileReferenceId]" jsOptions="width=600,height=500" icon="apps-filetree-folder-default">
+							Please select a locallang.xml file
+						</dev:Be.Link.ModuleWizard>
 					</td>
 				</tr>
 				<tr>

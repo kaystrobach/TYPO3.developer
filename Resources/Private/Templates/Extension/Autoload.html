@@ -8,7 +8,27 @@
 <f:section name="Content">
 	<h1>Generate Autoload</h1>
 	<f:form action="autoloadGenerate">
-		<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key"/>
-		<f:form.submit value="Generate Autoload" />
+		<table class="t3-table">
+			<tbody>
+				<tr>
+					<td>
+						extension key
+					</td>
+					<td>
+						<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key" class="expandField" value="{extensionName}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;
+					</td>
+					<td>
+						<f:form.button>
+							Generate Autoload
+						</f:form.button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</f:form>
 </f:section>

@@ -104,9 +104,10 @@ class ExtensionController extends ActionController {
 
 	/**
 	 * form for generating autoload
+	 * @param string $extensionName
 	 */
-	public function autoloadAction() {
-
+	public function autoloadAction($extensionName = '') {
+		$this->view->assign('extensionName', $extensionName);
 	}
 
 	/**
@@ -127,7 +128,14 @@ class ExtensionController extends ActionController {
 			$this->addFlashMessage($message);
 		}
 
-		$this->redirect('autoload');
+		$this->redirect(
+			'autoload',
+			NULL,
+			NULL,
+			array(
+				'extensionName' => $extensionName
+			)
+		);
 	}
 
 
