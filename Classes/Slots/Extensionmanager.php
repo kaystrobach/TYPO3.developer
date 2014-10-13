@@ -24,9 +24,9 @@ class Extensionmanager {
 					'extension' => $extension,
 					'actions' => array(
 						array(
-							'icon'       => 'actions-document-export-t3d',
+							'icon'       => 'extensions-developer-wrench',
 							'label'      => 'Upload',
-							'action'     => 'upload',
+							'action'     => 'index',
 							'controller' => 'Extension',
 						),
 					)

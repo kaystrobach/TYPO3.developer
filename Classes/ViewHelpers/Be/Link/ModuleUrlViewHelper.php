@@ -12,10 +12,12 @@ class ModuleUrlViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 	/**
 	 * @param $moduleName
 	 * @param $config
+	 * @param string $blindLinkOptions
+	 * @param string $allowedExtensions
 	 * @return string
 	 */
-	public function render($moduleName, $config) {
-		return $this->getUrl($moduleName, $config);
+	public function render($moduleName, $config, $blindLinkOptions = NULL, $allowedExtensions = NULL) {
+		return $this->getUrl($moduleName, $config, $blindLinkOptions, $allowedExtensions);
 	}
 
 	/**
@@ -23,10 +25,22 @@ class ModuleUrlViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 	 * @param $config
 	 * @return string
 	 */
-	protected function getUrl($moduleName, $config) {
+	protected function getUrl($moduleName, $config, $blindLinkOptions = NULL, $allowedExtensions = NULL) {
 		$config = $config + array(
 			'mode' => 'wizard'
 		);
+		if(!array_key_exists('P', $config)) {
+			$config['P'] = array();
+		}
+		if(!array_key_exists('params', $config['P'])) {
+			$config['P']['params'] = array();
+		}
+		if($blindLinkOptions !== NULL) {
+			$config['P']['params']['blindLinkOptions'] = $blindLinkOptions;
+		}
+		if($allowedExtensions !== NULL) {
+			$config['P']['params']['allowedExtensions'] = $allowedExtensions;
+		}
 		return BackendUtility::getModuleUrl($moduleName, $config);
 	}
 }

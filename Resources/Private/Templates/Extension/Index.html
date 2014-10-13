@@ -6,5 +6,35 @@
 </f:section>
 
 <f:section name="Content">
-
+	<h1>Extension module</h1>
+	<f:form action="index">
+		<table class="t3-table">
+			<tbody>
+				<tr>
+					<td>
+						extension key
+					</td>
+					<td>
+						<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key" sortByOptionLabel="1" value="{extensionName}" class="expandField"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;
+					</td>
+					<td>
+						<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'upload\')}'}">
+							upload
+						</f:form.button>
+						<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'codestylecheck\')}'}">
+							code style check
+						</f:form.button>
+						<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'autoload\')}'}">
+							generate autoload file
+						</f:form.button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</f:form>
 </f:section>

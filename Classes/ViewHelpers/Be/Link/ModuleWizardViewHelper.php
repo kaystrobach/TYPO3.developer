@@ -18,17 +18,20 @@ class ModuleWizardViewHelper extends ModuleUrlViewHelper {
 	 * @param array $config
 	 * @param string $jsOptions
 	 * @param string $icon
+	 * @param string $blindLinkOptions
+	 * @param string $allowedExtensions
 	 * @return string
 	 */
-	public function render($moduleName, $formName, $formField, $config = array(), $jsOptions = '', $icon = '') {
+	public function render($moduleName, $formName, $formField, $config = array(), $jsOptions = '', $icon = '', $blindLinkOptions = NULL, $allowedExtensions = NULL) {
 		$config = $config + array(
 			'P' => array(
 				'formName' => $formName,
 				'itemName' => $formField,
+				'params' => array()
 			)
 		);
 		return $this->buildTag(
-			$this->wrapJs($this->getUrl($moduleName, $config), $jsOptions),
+			$this->wrapJs($this->getUrl($moduleName, $config, $blindLinkOptions, $allowedExtensions), $jsOptions),
 			$this->getIcon($icon) . $this->renderChildren()
 		);
 	}
