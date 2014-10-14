@@ -20,17 +20,25 @@
 				</tr>
 				<tr>
 					<td>
-						&nbsp;
+						development actions
 					</td>
 					<td>
-						<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'upload\')}'}">
-							upload
-						</f:form.button>
 						<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'codestylecheck\')}'}">
 							code style check
 						</f:form.button>
 						<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'autoload\')}'}">
 							generate autoload file
+						</f:form.button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						publishing actions
+					</td>
+					<td>
+
+						<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'upload\')}'}">
+							upload
 						</f:form.button>
 					</td>
 				</tr>
