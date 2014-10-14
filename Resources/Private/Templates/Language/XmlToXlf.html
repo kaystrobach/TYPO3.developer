@@ -7,13 +7,43 @@
 
 <f:section name="Content">
 	<h1>XML to XLF converter</h1>
-	<p>
-		To select a file, please create a storage, which points to the typo3conf folder.<br>
-		<a href="https://forge.typo3.org/issues/62196" target="_blank">
-			Due to a bug in the FAL implementation you need to make the storage writeable.
-		</a>
-	</p>
+
+	<dev:format.code title="example xliff file in default language - locallang.xlf" language="xml">
+		<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+		<xliff version="1.0">
+			<file source-language="en" datatype="plaintext" original="messages" date="2013-03-04T08:46:06Z" product-name="themes">
+				<header/>
+				<body>
+					<trans-unit id="mlang_tabs_tab" xml:space="preserve">
+						<source>Themes</source>
+					</trans-unit>
+				</body>
+			</file>
+		</xliff>
+	</dev:format.code>
+
+	<dev:format.code title="example xliff file in german - locallang.de.xlf" language="xml">
+			<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+			<xliff version="1.0">
+				<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2013-03-04T08:46:06Z" product-name="themes">
+					<header/>
+					<body>
+						<trans-unit id="mlang_tabs_tab" xml:space="preserve">
+							<source>Themes</source>
+							<target>Design</target>
+						</trans-unit>
+					</body>
+				</file>
+			</xliff>
+	</dev:format.code>
+
 	<f:form action="xmlToXlf" name="test">
+		<p>
+			To select a file, please create a storage, which points to the typo3conf folder.<br>
+			<a href="https://forge.typo3.org/issues/62196" target="_blank">
+				Due to a bug in the FAL implementation you need to make the storage writeable.
+			</a>
+		</p>
 		<table class="t3-table">
 			<tbody>
 				<tr>

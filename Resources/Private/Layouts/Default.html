@@ -2,16 +2,14 @@
 		pageTitle="plimm"
 		loadJQuery="1"
 		includeCssFiles="{
-			1: '../typo3conf/ext/developer/Resources/Public/Contrib/carousel/css/bootstrap.css',
-			2: '../typo3conf/ext/developer/Resources/Public/Stylesheet/main.css'
+			0: '../typo3conf/ext/developer/Resources/Public/Stylesheet/main.css',
+			1: '../typo3conf/ext/developer/Resources/Public/Contrib/Highlight/styles/github.css'
 		}"
 		includeJsFiles="{
-			0: '../typo3conf/ext/themes/Resources/Public/Contrib/colorpicker/js/colorpicker.js',
-			1: '../typo3conf/ext/themes/Resources/Public/JavaScript/BackendModule.js',
-			2: '../typo3conf/ext/themes/Resources/Public/Contrib/unSlider/unslider.min.js',
-			3: '../typo3conf/ext/themes/Resources/Public/Contrib/carousel/js/bootstrap.min.js'
+			0: '../typo3conf/ext/developer/Resources/Public/Contrib/Highlight/highlight.pack.js'
 		}"
 		>
+	<script>hljs.initHighlightingOnLoad();</script>
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
 			<div class="typo3-docheader-functions">
@@ -23,6 +21,7 @@
 						<f:be.menus.actionMenuItem label="Information: Documentation" controller="Information" action="documentation" />
 						<f:be.menus.actionMenuItem label="Information: Hooks" controller="Information" action="hooks" />
 						<f:be.menus.actionMenuItem label="Information: Signals" controller="Information" action="signals" />
+						<f:be.menus.actionMenuItem label="Information: XClasses" controller="Information" action="xclass" />
 
 						<f:be.menus.actionMenuItem label="Sprite: Sprite Icons" controller="Sprite" action="listSpriteIcons" />
 						<f:be.menus.actionMenuItem label="Sprite: Table Icons" controller="Sprite" action="listTableIcons" />

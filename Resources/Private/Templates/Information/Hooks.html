@@ -10,8 +10,25 @@
 	<h1>Registered Hooks</h1>
 
 	<p>
-		Hooks are displayed via the output of the array $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']
+		Hooks are displayed via the output of the array $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'].
+		More Information are available at
+		<a href="http://typo3.org/documentation/article/how-to-use-existing-hooks-in-your-own-extension/" target="_blank">
+			http://typo3.org/documentation/article/how-to-use-existing-hooks-in-your-own-extension/
+		</a>
 	</p>
+
+	<dev:format.code title="create a hook" language="php">
+		$hookObjectsArr = array();
+		if (is_array ($TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'])) {
+			foreach ($TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'] as $classRef) {
+				$hookObjectsArr[] = &t3lib_div::getUserObj ($classRef);
+			}
+		}
+	</dev:format.code>
+
+	<dev:format.code title="watch hook" language="php">
+		$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'tx_myextension_tcemainprocdm';
+	</dev:format.code>
 
 	<table class="t3-table">
 		<tbody>

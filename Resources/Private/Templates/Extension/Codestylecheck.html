@@ -42,8 +42,8 @@
 	</dev:package.IfInstalled>
 	<f:if condition="{raw}">
 		<h2>Command</h2>
-		<pre>{command}</pre>
+		<dev:format.code title="command" language="sh">{command}</dev:format.code>
 		<h2>Output</h2>
-		<pre>{raw}</pre>
+		<dev:format.code title="output" language="sh">{raw}</dev:format.code>
 	</f:if>
 </f:section>

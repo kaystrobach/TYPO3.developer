@@ -1,0 +1,43 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>Registered XClasses</h1>
+
+	<p>
+		Signals are collected from $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'].
+		See <a href="http://wiki.typo3.org/Xclass" target="_blank">http://wiki.typo3.org/Xclass</a> for more Information.
+	</p>
+	<dev:format.code title="register xclass" language="php">
+		You can register Xclasses like this:
+		$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Frontend\\ContentObject\\FluidTemplateContentObject'] = array(
+			'className' => 'Enet\\FxLibrary\\Xclass\\FluidTemplateContentObject',
+		);
+	</dev:format.code>
+
+	<table class="t3-table">
+		<thead>
+		<tr>
+			<td>class</td>
+			<td>xclasses</td>
+		</tr>
+		</thead>
+		<tbody>
+		<f:for each="{xClasses}" as="xclass" key="classname">
+			<tr>
+				<td>
+					{classname}
+				</td>
+				<td>
+					<dev:Debug.viewArray value="{xclass}" />
+				</td>
+			</tr>
+		</f:for>
+		</tbody>
+	</table>
+</f:section>
