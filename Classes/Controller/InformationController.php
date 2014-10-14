@@ -40,11 +40,21 @@ class InformationController extends ActionController {
 		$this->view->assign('hooks', $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']);
 	}
 
+	/**
+	 *
+	 */
 	public function signalsAction() {
 		$reflection = new \ReflectionClass($this->signalSlotDispatcher);
 		$attribute = $reflection->getProperty('slots');
 		$attribute->setAccessible(TRUE);
 		$this->view->assign('classes', $attribute->getValue($this->signalSlotDispatcher));
+	}
+
+	/**
+	 *
+	 */
+	public function xClassAction() {
+		$this->view->assign('xClasses', $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']);
 	}
 
 }

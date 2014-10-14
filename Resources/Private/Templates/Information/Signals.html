@@ -13,6 +13,27 @@
 		Signals are collected from \TYPO3\CMS\Extbase\SignalSlot\Dispatcher->slots
 	</p>
 
+	<dev:format.code title="Emit a signal" language="php">
+		$this->signalSlotDispatcher->dispatch(
+			__CLASS__,
+			static::SIGNAL_ProcessActions,
+			array(
+				$extension,
+				&$actions,
+			)
+		);
+	</dev:format.code>
+
+	<dev:format.code title="React on a signal" language="php">
+		$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+		$signalSlotDispatcher->connect(
+			'TYPO3\\CMS\\Extensionmanager\\ViewHelpers\\ProcessAvailableActionsViewHelper',
+			'processActions',
+			'KayStrobach\\Developer\\Slots\\ExtensionManager',
+			'processActions'
+		);
+	</dev:format.code>
+
 	<table class="t3-table">
 		<thead>
 			<tr>
