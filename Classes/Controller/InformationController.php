@@ -53,7 +53,7 @@ class InformationController extends ActionController {
 	/**
 	 *
 	 */
-	public function xClassAction() {
+	public function xclassAction() {
 		$this->view->assign('xClasses', $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']);
 	}
 
