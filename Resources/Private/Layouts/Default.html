@@ -1,3 +1,4 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
 <f:be.container
 		pageTitle="plimm"
 		loadJQuery="1"
@@ -15,31 +16,38 @@
 			<div class="typo3-docheader-functions">
 				<div class="left">
 					<f:be.menus.actionMenu>
-						<f:be.menus.actionMenuItem label="Default: Welcome" controller="Default" action="index" />
+						<dev:be.menus.actionMenuItemGroup label="General">
+							<f:be.menus.actionMenuItem label="Overview" controller="Default" action="index" />
+							<f:be.menus.actionMenuItem label="Get in touch with the Community" controller="Community" action="index" />
+							<f:be.menus.actionMenuItem label="Documentation" controller="Community" action="documentation" />
+						</dev:be.menus.actionMenuItemGroup>
 
-						<f:be.menus.actionMenuItem label="Community: get in touch" controller="Community" action="index" />
+						<dev:be.menus.actionMenuItemGroup label="Information">
+							<f:be.menus.actionMenuItem label="PHP Information" controller="Information" action="listPhpInfo" />
+							<f:be.menus.actionMenuItem label="Hooks" controller="Information" action="hooks" />
+							<f:be.menus.actionMenuItem label="Signals" controller="Information" action="signals" />
+							<f:be.menus.actionMenuItem label="XClasses" controller="Information" action="xclass" />
+						</dev:be.menus.actionMenuItemGroup>
 
-						<f:be.menus.actionMenuItem label="Information: PHP Information" controller="Information" action="listPhpInfo" />
-						<f:be.menus.actionMenuItem label="Information: Documentation" controller="Information" action="documentation" />
-						<f:be.menus.actionMenuItem label="Information: Hooks" controller="Information" action="hooks" />
-						<f:be.menus.actionMenuItem label="Information: Signals" controller="Information" action="signals" />
-						<f:be.menus.actionMenuItem label="Information: XClasses" controller="Information" action="xclass" />
+						<dev:be.menus.actionMenuItemGroup label="Sprite">
+							<f:be.menus.actionMenuItem label="Sprite: Sprite Icons" controller="Sprite" action="listSpriteIcons" />
+							<f:be.menus.actionMenuItem label="Sprite: Table Icons" controller="Sprite" action="listTableIcons" />
+						</dev:be.menus.actionMenuItemGroup>
 
-						<f:be.menus.actionMenuItem label="Sprite: Sprite Icons" controller="Sprite" action="listSpriteIcons" />
-						<f:be.menus.actionMenuItem label="Sprite: Table Icons" controller="Sprite" action="listTableIcons" />
+						<dev:be.menus.actionMenuItemGroup label="Extension">
+							<f:be.menus.actionMenuItem label="Extension: index" controller="Extension" action="index" />
+							<f:be.menus.actionMenuItem label="Extension: ext_autoload.php" controller="Extension" action="autoload" />
+							<f:be.menus.actionMenuItem label="Extension: upload to TYPO3 Extenion repository" controller="Extension" action="upload" />
+							<f:be.menus.actionMenuItem label="Extension: codestyle" controller="Extension" action="codestylecheck" />
+						</dev:be.menus.actionMenuItemGroup>
 
-						<f:be.menus.actionMenuItem label="Extension: index" controller="Extension" action="index" />
-						<f:be.menus.actionMenuItem label="Extension: ext_autoload.php" controller="Extension" action="autoload" />
-						<f:be.menus.actionMenuItem label="Extension: upload to TYPO3 Extenion repository" controller="Extension" action="upload" />
-						<f:be.menus.actionMenuItem label="Extension: codestyle" controller="Extension" action="codestylecheck" />
-
-						<f:be.menus.actionMenuItem label="Language: convert locallang.xml to locallang.xlf" controller="Language" action="xmlToXlf" />
-
-						<f:be.menus.actionMenuItem label="System: clear all caches" controller="System" action="clearAllCaches" />
-
-						<f:be.menus.actionMenuItem label="Tools: cssanalyzer" controller="Tools" action="cssanalyze" />
-						<f:be.menus.actionMenuItem label="Tools: calculate" controller="Tools" action="calculate" />
-						<f:be.menus.actionMenuItem label="Tools: diff" controller="Tools" action="diff" />
+						<dev:be.menus.actionMenuItemGroup label="Tools">
+							<f:be.menus.actionMenuItem label="Language: convert locallang.xml to locallang.xlf" controller="Language" action="xmlToXlf" />
+							<f:be.menus.actionMenuItem label="System: clear all caches" controller="System" action="clearAllCaches" />
+							<f:be.menus.actionMenuItem label="Css analyzer" controller="Tools" action="cssanalyze" />
+							<f:be.menus.actionMenuItem label="Calculator" controller="Tools" action="calculate" />
+							<f:be.menus.actionMenuItem label="Grafical diff" controller="Tools" action="diff" />
+						</dev:be.menus.actionMenuItemGroup>
 
 					</f:be.menus.actionMenu>
 				</div>

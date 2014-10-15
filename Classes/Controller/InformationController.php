@@ -27,13 +27,6 @@ class InformationController extends ActionController {
 	}
 
 	/**
-	 * show some documentation links
-	 */
-	public function documentationAction() {
-
-	}
-
-	/**
 	 *
 	 */
 	public function hooksAction() {

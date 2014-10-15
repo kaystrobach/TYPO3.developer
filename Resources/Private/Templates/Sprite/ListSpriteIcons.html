@@ -10,10 +10,23 @@
 	<p>
 		You add further icons from your own extension using:
 	</p>
-	<dev:highlight>
+
+	<dev:format.code language="php" title="the short way">
+		\TYPO3\CMS\Backend\Sprite\SpriteManager::addSingleIcons(
+			array(
+				'wrench' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/iconmonstr-wrench-7-icon-16.png',
+			),
+			$_EXTKEY
+		);
+	</dev:format.code>
+
+	<dev:format.code language="php" title="the multiicon way">
 		// ext_tables.php:
-		$icons = array(\'extensions-myextension-icon1\', \'extensions-myextension-icon2\');
-		t3lib_SpriteManager::addIconSprite($icons,t3lib_extMgm::siteRelPath(\'myextension\') . \'myextension_sprite.css\');
+		$icons = array('extensions-myextension-icon1', 'extensions-myextension-icon2');
+		\TYPO3\CMS\Backend\Sprite\SpriteManager::addIconSprite(
+			$icons,
+			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('myextension') . 'myextension_sprite.css'
+		);
 
 		// myextension_sprite.css:
 		.t3-icon-extensions-myextension {
@@ -21,7 +34,7 @@
 		}
 		.t3-icon-extensions-myextension-icon1 {	background-position: 0px 0px; }
 		.t3-icon-extensions-myextension-icon2 {	background-position: 0px -16px; }
-	</dev:highlight>
+	</dev:format.code>
 
 	<h1>Icons currently available</h1>
 	<table class="t3-table">
