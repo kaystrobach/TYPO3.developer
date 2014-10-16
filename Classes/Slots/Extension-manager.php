@@ -5,7 +5,7 @@ namespace KayStrobach\Developer\Slots;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class Extensionmanager {
+class ExtensionManager {
 
 	/**
 	 * Extends the list of actions for EXT:developer to change the
