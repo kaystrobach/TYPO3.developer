@@ -10,6 +10,9 @@ namespace KayStrobach\Developer\Command;
 
 
 class InformationCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController {
+	/**
+	 * display phpinfo
+	 */
 	public function phpInfoCommand() {
 		phpinfo();
 	}

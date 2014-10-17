@@ -38,7 +38,7 @@ class ExtensionCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\Comma
 	 * @param string $extensionKey
 	 */
 	public function createT3xCommand($extensionKey) {
-
+		$this->outputLine('may export an t3x lateron');
 	}
 
 	/**
