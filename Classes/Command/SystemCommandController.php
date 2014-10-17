@@ -9,7 +9,7 @@
 namespace KayStrobach\Developer\Command;
 
 
-class SystemCommandController  extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController {
+class SystemCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController {
 	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 * @inject
