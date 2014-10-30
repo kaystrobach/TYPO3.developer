@@ -62,6 +62,10 @@ class DefaultController extends ActionController {
 			'key' => 't3adminer',
 			'description' => 'SQL Administration tool, which is similar to PHPMyAdmin but well integrated and faster. And due to a well done integration less risky then having phpmyadmin installed in TYPO3.',
 		),
+		array(
+			'key' => 'examples',
+			'description' => 'Contains some code examples on how to use the TYPO3 core API.',
+		)
 	);
 
 	protected $phpExtensionsToCheck = array(
@@ -96,6 +100,10 @@ class DefaultController extends ActionController {
 		array(
 			'key' => 'mayflower/php-codebrowser',
 			'description' => 'Generates a browsable representation of PHP code where sections with violations found by quality assurance tools such as PHP_CodeSniffer or PHPMD are highlighted.'
+		),
+		array(
+			'key' => 'nikic/php-parser',
+			'description' => 'Allows you to parse php code in pure php, can be used for syntax checks',
 		)
 	);
 
