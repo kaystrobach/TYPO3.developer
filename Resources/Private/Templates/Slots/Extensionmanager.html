@@ -1,5 +1,6 @@
 <f:for each="{actions}" as="action">
 	<f:link.action
+			class="btn"
 			action="{action.action}" controller="{action.controller}"
 			extensionName="developer" pluginName="tools_developermod1"
 			arguments="{extensionName:extension.key}" additionalParams="{M:'tools_DeveloperMod1', tx_developer_tools_developermod1:{controller:action.controller, action:action.action}}"
