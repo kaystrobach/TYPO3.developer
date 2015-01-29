@@ -8,7 +8,7 @@ if (TYPO3_MODE === 'BE') {
 		array(// Allowed controller action combinations
 			'Default'     => 'index',
 			'Community'   => 'index,documentation',
-			'Information' => 'index,listPhpInfo,hooks,signals,xclass',
+			'Information' => 'index,listPhpInfo,environmentVariables,hooks,signals,xclass',
 			'Language'    => 'index,xmlToXlf',
 			'Sprite'      => 'listSpriteIcons,regenerateSkinFiles,listTableIcons',
 			'Extension'   => 'index,upload,uploadProcess,autoload,autoloadGenerate,codestylecheck',
