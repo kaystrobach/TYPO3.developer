@@ -25,8 +25,14 @@ class ExtensionManager {
 					'actions' => array(
 						array(
 							'icon'       => 'extensions-developer-wrench',
-							'label'      => 'Upload',
+							'label'      => 'open extension in ext:developer',
 							'action'     => 'index',
+							'controller' => 'Extension',
+						),
+						array(
+							'icon'       => 'actions-document-export-t3d',
+							'label'      => 'Download t3x',
+							'action'     => 'downloadT3x',
 							'controller' => 'Extension',
 						),
 					)

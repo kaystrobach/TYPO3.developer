@@ -11,7 +11,7 @@ if (TYPO3_MODE === 'BE') {
 			'Information' => 'index,listPhpInfo,environmentVariables,hooks,signals,xclass',
 			'Language'    => 'index,xmlToXlf',
 			'Sprite'      => 'listSpriteIcons,regenerateSkinFiles,listTableIcons',
-			'Extension'   => 'index,upload,uploadProcess,autoload,autoloadGenerate,codestylecheck',
+			'Extension'   => 'index,upload,uploadProcess,autoload,autoloadGenerate,codestylecheck,downloadT3x',
 			'Tools'       => 'calculate,diff,,cssanalyze',
 			'System'      => 'clearAllCaches,'
 		), array(// Additional configuration

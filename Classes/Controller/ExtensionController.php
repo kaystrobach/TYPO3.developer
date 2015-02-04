@@ -10,6 +10,7 @@ namespace KayStrobach\Developer\Controller;
 
 use KayStrobach\Developer\Services\ExtractExtensionClassNameService;
 use KayStrobach\Developer\Services\Soap\TerUpload;
+use KayStrobach\Developer\Services\T3xService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -158,5 +159,15 @@ class ExtensionController extends ActionController {
 		}
 
 		$this->view->assign('extensionName', $extensionName);
+	}
+
+	/**
+	 * @param string $extensionName
+	 * @return string
+	 */
+	public function downloadT3xAction($extensionName = '') {
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename=' . $extensionName . '.t3x');
+		return T3xService::create($extensionName);
 	}
 } 
