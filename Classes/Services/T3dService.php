@@ -11,6 +11,7 @@ namespace KayStrobach\Developer\Services;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 class T3dService {
 	/**
@@ -30,6 +31,10 @@ class T3dService {
 		$this->export->includeExtFileResources = FALSE;
 		$this->export->setSaveFilesOutsideExportFile(TRUE);
 		$this->export->setHeaderBasics();
+
+		$this->export->relStaticTables = array('_ALL');
+		$this->export->relOnlyTables = array('_ALL');
+		;
 
 		$this->export->setMetaData(
 			'Exported with ext:developer',
@@ -62,7 +67,7 @@ class T3dService {
 		$flatList = $this->export->setPageTree($idH);
 		foreach ($flatList as $k => $value) {
 			$this->export->export_addRecord('pages', BackendUtility::getRecord('pages', $k));
-			$this->addRecordsForPid($k, '_ALL', 999999999999999);
+			$this->addRecordsForPid($k, array('_ALL'), 9999999999);
 		}
 
 		// After adding ALL records we set relations:
@@ -108,14 +113,45 @@ class T3dService {
 		$db = $GLOBALS['TYPO3_DB'];
 		foreach ($GLOBALS['TCA'] as $table => $value) {
 			if ($table != 'pages' && (in_array($table, $tables) || in_array('_ALL', $tables))) {
-				if ($this->getBackendUser()->check('tables_select', $table) && !$GLOBALS['TCA'][$table]['ctrl']['is_static']) {
+				#if ($this->getBackendUser()->check('tables_select', $table) && !$GLOBALS['TCA'][$table]['ctrl']['is_static']) {
 					$res = $this->exec_listQueryPid($table, $k, MathUtility::forceIntegerInRange($maxNumber, 1));
 					while ($subTrow = $db->sql_fetch_assoc($res)) {
 						$this->export->export_addRecord($table, $subTrow);
 					}
 					$db->sql_free_result($res);
-				}
+				#}
 			}
 		}
+	}
+
+	/**
+	 * Selects records from table / pid
+	 *
+	 * @param string $table Table to select from
+	 * @param int $pid Page ID to select from
+	 * @param int $limit Max number of records to select
+	 * @return \mysqli_result|object Database resource
+	 */
+	public function exec_listQueryPid($table, $pid, $limit) {
+		$db = $this->getDatabaseConnection();
+		$orderBy = $GLOBALS['TCA'][$table]['ctrl']['sortby']
+			? 'ORDER BY ' . $GLOBALS['TCA'][$table]['ctrl']['sortby']
+			: $GLOBALS['TCA'][$table]['ctrl']['default_sortby'];
+		$res = $db->exec_SELECTquery(
+			'*',
+			$table,
+			'pid=' . (int)$pid . BackendUtility::deleteClause($table) . BackendUtility::versioningPlaceholderClause($table),
+			'',
+			$db->stripOrderBy($orderBy),
+			$limit
+		);
+		return $res;
+	}
+
+	/**
+	 * @return DatabaseConnection
+	 */
+	protected function getDatabaseConnection() {
+		return $GLOBALS['TYPO3_DB'];
 	}
 }
