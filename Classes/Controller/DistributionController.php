@@ -49,8 +49,7 @@ class DistributionController extends ActionController {
 	}
 
 	public function editAction() {
-		$distService = new T3dService();
-		$distService->export('');
+
 	}
 
 	/**
@@ -71,5 +70,10 @@ class DistributionController extends ActionController {
 			$this->redirect('index');
 		}
 		$this->redirect('index');
+	}
+
+	public function t3dExportAction() {
+		$distService = new T3dService();
+		$distService->export('');
 	}
 }
