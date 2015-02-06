@@ -1,0 +1,47 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>Distribution module</h1>
+	<f:form action="index">
+		<table class="t3-table">
+			<tbody>
+			<tr>
+				<td>
+					extension key
+				</td>
+				<td>
+					<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key" sortByOptionLabel="1" value="{extension}" class="expandField"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					development actions
+				</td>
+				<td>
+					<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'update\')}'}">
+						update
+					</f:form.button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					publishing actions
+				</td>
+				<td>
+					<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'upload\', controller:\'extension\')}'}">
+						upload
+					</f:form.button>
+					<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'downloadT3x\', controller:\'extension\')}'}">
+						get .t3x of this extension
+					</f:form.button>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</f:form>
+</f:section>

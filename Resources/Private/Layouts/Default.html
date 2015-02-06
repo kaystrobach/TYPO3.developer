@@ -42,6 +42,12 @@
 							<f:be.menus.actionMenuItem label="Extension: codestyle" controller="Extension" action="codestylecheck" />
 						</dev:be.menus.actionMenuItemGroup>
 
+						<dev:be.menus.actionMenuItemGroup label="Distributions">
+							<f:be.menus.actionMenuItem label="Overview" controller="Distribution" action="index" />
+							<f:be.menus.actionMenuItem label="Create new Distribution" controller="Distribution" action="new" />
+							<f:be.menus.actionMenuItem label="Status" controller="Distribution" action="status" />
+						</dev:be.menus.actionMenuItemGroup>
+
 						<dev:be.menus.actionMenuItemGroup label="Tools">
 							<f:be.menus.actionMenuItem label="Language: convert locallang.xml to locallang.xlf" controller="Language" action="xmlToXlf" />
 							<f:be.menus.actionMenuItem label="System: clear all caches" controller="System" action="clearAllCaches" />
