@@ -40,8 +40,24 @@ class T3dService {
 			'email'
 		);
 
+		$sPage = array(
+			'uid' => 0,
+			'title' => 'ROOT'
+		);
+
+		$pid = 0;
+		$tree = GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Tree\View\PageTreeView::class);
+		$tree->init('');
+		$HTML = '';
+		$tree->tree[] = array('row' => $sPage, 'HTML' => $HTML);
+		$tree->buffer_idH = array();
+		$tree->getTree($pid, 9999999999, '');
+
 		$idH = array();
-		$idH[0]['uid'] = 0;
+		$idH[$pid]['uid'] = $pid;
+		if (count($tree->buffer_idH)) {
+			$idH[$pid]['subrow'] = $tree->buffer_idH;
+		}
 
 		$flatList = $this->export->setPageTree($idH);
 		foreach ($flatList as $k => $value) {
@@ -66,7 +82,6 @@ class T3dService {
 		$out = $this->export->compileMemoryToFileContent();
 		$fExt = ($this->export->doOutputCompress() ? '-z' : '') . '.t3d';
 
-		$mimeType = 'application/octet-stream';
 		Header('Content-Type: application/octet-stream');
 		Header('Content-Length: ' . strlen($out));
 		Header('Content-Disposition: attachment; filename=' . date('Y-m-d-h-i-s').'.t3d');

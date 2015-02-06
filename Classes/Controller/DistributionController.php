@@ -3,6 +3,7 @@
 namespace KayStrobach\Developer\Controller;
 
 
+use KayStrobach\Developer\Services\T3dService;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -48,7 +49,8 @@ class DistributionController extends ActionController {
 	}
 
 	public function editAction() {
-
+		$distService = new T3dService();
+		$distService->export('');
 	}
 
 	/**
