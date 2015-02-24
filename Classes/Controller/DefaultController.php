@@ -27,6 +27,10 @@ class DefaultController extends ActionController {
 	 */
 	protected $extensionsToCheck = array(
 		array(
+			'key' => 'typo3_console',
+			'description' => 'use this extension to add a very nice commandline interface to TYPO3.',
+		),
+		array(
 			'key' => 'styleguide',
 			'description' => 'with styleguide you can get an insight of the backend styles',
 		),
