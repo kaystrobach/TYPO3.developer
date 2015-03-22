@@ -27,6 +27,7 @@ $signalSlotDispatcher->connect(
 /**
  * Register CommandControllers
  */
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'KayStrobach\Developer\Command\CoreCommandController';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'KayStrobach\Developer\Command\InformationCommandController';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'KayStrobach\Developer\Command\ExtensionCommandController';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'KayStrobach\Developer\Command\LanguageCommandController';
