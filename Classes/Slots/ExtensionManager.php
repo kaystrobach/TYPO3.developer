@@ -17,7 +17,7 @@ class ExtensionManager {
 	public function processActions(array $extension, array &$actions) {
 		if($extension['type'] !== 'System') {
 			/** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-			$view = GeneralUtility::makeInstance('\TYPO3\CMS\Fluid\View\StandaloneView');
+			$view = GeneralUtility::makeInstance('TYPO3\CMS\Fluid\View\StandaloneView');
 			$view->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('developer') . '/Resources/Private/Templates/Slots/Extensionmanager.html');
 			$view->assignMultiple(
 				array(
