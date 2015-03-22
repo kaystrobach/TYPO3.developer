@@ -19,13 +19,23 @@ class SpriteGenerationService {
 
 		$this->unlinkT3SkinFiles();
 
-		$data = $generator
-			->setSpriteFolder(TYPO3_mainDir . 'sysext/t3skin/images/sprites/')
-			->setCSSFolder(TYPO3_mainDir . 'sysext/t3skin/stylesheets/sprites/')
-			->setOmmitSpriteNameInIconName(TRUE)
-			->setIncludeTimestampInCSS(TRUE)
-			->generateSpriteFromFolder(array(TYPO3_mainDir . 'sysext/t3skin/images/icons/'));
-
+		if(method_exists($generator, 'setOmmitSpriteNameInIconName')) {
+			// pre 7.x
+			$data = $generator
+				->setSpriteFolder(TYPO3_mainDir . 'sysext/t3skin/images/sprites/')
+				->setCSSFolder(TYPO3_mainDir . 'sysext/t3skin/stylesheets/sprites/')
+				->setOmmitSpriteNameInIconName(TRUE)
+				->setIncludeTimestampInCSS(TRUE)
+				->generateSpriteFromFolder(array(TYPO3_mainDir . 'sysext/t3skin/images/icons/'));
+		} else {
+			$generator->setEnableHighDensitySprite(TRUE);
+			$data = $generator
+				->setSpriteFolder(TYPO3_mainDir . 'sysext/t3skin/images/sprites/')
+				->setCSSFolder(TYPO3_mainDir . 'sysext/t3skin/stylesheets/sprites/')
+				->setOmitSpriteNameInIconName(TRUE)
+				->setIncludeTimestampInCSS(TRUE)
+				->generateSpriteFromFolder(array(TYPO3_mainDir . 'sysext/t3skin/images/icons/'));
+		}
 
 		$stddbPath = ExtensionManagementUtility::extPath('core') . 'ext_tables.php';
 
