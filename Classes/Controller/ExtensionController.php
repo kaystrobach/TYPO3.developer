@@ -11,6 +11,7 @@ namespace KayStrobach\Developer\Controller;
 use KayStrobach\Developer\Services\ExtractExtensionClassNameService;
 use KayStrobach\Developer\Services\Soap\TerUpload;
 use KayStrobach\Developer\Services\T3xService;
+use KayStrobach\Developer\Utility\DirectoryStructureCheck;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -166,6 +167,15 @@ class ExtensionController extends ActionController {
 		);
 	}
 
+	/**
+	 * @param string $extensionName
+	 */
+	public function directoryStructureCheckAction($extensionName = '') {
+		$extensionDirectory = ExtensionManagementUtility::extPath($extensionName);
+
+		$this->view->assign('directories', DirectoryStructureCheck::checkDirectories($extensionDirectory));
+		$this->view->assign('files', DirectoryStructureCheck::checkFiles($extensionDirectory));
+	}
 
 	/**
 	 * @param string $extensionName
