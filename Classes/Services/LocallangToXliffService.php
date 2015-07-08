@@ -82,6 +82,7 @@ class LocallangToXliffService {
 	}
 
 	/**
+	 * @deprecated
 	 * @param string $langKey
 	 * @return string
 	 */
@@ -91,5 +92,16 @@ class LocallangToXliffService {
 		} else {
 			return '.' . $langKey . '.xlf';
 		}
+	}
+
+	/**
+	 * @param $langKey
+	 * @return string
+	 */
+	public function getPrefixForFile($langKey) {
+		if($langKey === 'default') {
+			return '';
+		}
+		return $langKey . '.';
 	}
 } 

@@ -51,7 +51,7 @@ class LanguageController extends ActionController {
 
 
 			foreach($this->locallangToXliffService->getDefinedLanguages() as $language) {
-				$xlfFileName = $file->getNameWithoutExtension() . $this->locallangToXliffService->getFileExtension($language);
+				$xlfFileName = $this->locallangToXliffService->getPrefixForFile($language) . $file->getNameWithoutExtension() . '.xlf';
 				$newXlfFilesCreated[] = $xlfFileName;
 				$tempFile = GeneralUtility::tempnam('locallang');
 				file_put_contents($tempFile, $this->locallangToXliffService->getXlfForLangKey($language));
