@@ -1,0 +1,32 @@
+<style type="text/css">
+	table.diff {
+		display:block;
+	}
+	table.diff td.linenumber {
+		text-align: right;
+	}
+	table.diff td.code {
+		vertical-align : top;
+		white-space    : pre;
+		white-space    : pre-wrap;
+		font-family    : monospace;
+		text-overflow: ellipsis;
+	}
+	table.diff tr.removed td {
+		background-color:lightcoral!important;
+	}
+	table.diff tr.added td {
+		background-color: lightgreen!important;
+	}
+</style>
+
+<table class="diff">
+	<f:for each="{diff}" as="line" key="lineNumber">
+		<f:if condition="{line.1}">
+			<tr class="{f:if(condition:'{line.1}==2', then:'removed')} {f:if(condition:'{line.1}==1', then:'added')} {f:if(condition:'{line.1}==0', then:'unchanged')}">
+				<td class="linenumber">{lineNumber}</td>
+				<td class="code">{line.0}</td>
+			</tr>
+		</f:if>
+	</f:for>
+</table>

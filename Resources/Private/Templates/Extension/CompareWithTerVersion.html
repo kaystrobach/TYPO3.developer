@@ -1,0 +1,77 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>{extensionName}</h1>
+	<table class="t3-table">
+		<thead>
+		<tr>
+			<td>
+				version
+			</td>
+		</tr>
+		</thead>
+		<f:for each="{versions}" as="version">
+			<tr>
+				<td>
+					<f:if condition="{version}=={selectedVersion}">
+						<f:then>
+							<f:link.action action="compareWithTerVersion" arguments="{extensionName:version.extensionKey, version:version.version}">
+								<strong>{version.version}</strong>
+							</f:link.action>
+						</f:then>
+						<f:else>
+							<f:link.action action="compareWithTerVersion" arguments="{extensionName:version.extensionKey, version:version.version}">
+								{version.version}
+							</f:link.action>
+						</f:else>
+					</f:if>
+
+				</td>
+			</tr>
+		</f:for>
+	</table>
+
+	<h1>Version: {selectedVersion.version}</h1>
+
+	<table class="t3-table">
+		<thead>
+			<tr>
+				<td>
+					state
+				</td>
+				<td>
+					filename
+				</td>
+				<td>
+					message
+				</td>
+			</tr>
+		</thead>
+		<f:for each="{fileStates}" as="filestate" key="file">
+			<tr title="{filestate.message}">
+				<td>
+					<f:if condition="{filestate.state}">
+						<f:then>
+							<span class="t3-icon t3-icon-status t3-icon-status-dialog t3-icon-dialog-ok"></span>
+						</f:then>
+						<f:else>
+							<span class="t3-icon t3-icon-status t3-icon-status-dialog t3-icon-dialog-warning"></span>
+						</f:else>
+					</f:if>
+				</td>
+				<td>
+					{file}
+				</td>
+				<td>
+					<f:render partial="Extension/Diff" arguments="{diff:filestate.diff}" />
+				</td>
+			</tr>
+		</f:for>
+	</table>
+
+</f:section>

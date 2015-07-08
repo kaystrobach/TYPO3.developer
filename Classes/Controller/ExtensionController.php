@@ -15,6 +15,7 @@ use KayStrobach\Developer\Utility\DirectoryStructureCheck;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Documentation\Slots\ExtensionManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use KayStrobach\Developer\Utility\ShellCaptureUtility;
 
@@ -32,6 +33,18 @@ class ExtensionController extends ActionController {
 	 * @inject
 	 */
 	protected $listUtility;
+
+	/**
+	 * @var \TYPO3\CMS\Extensionmanager\Domain\Repository\ExtensionRepository
+	 * @inject
+	 */
+	protected $extensionRepository;
+
+	/**
+	 * @var \KayStrobach\Developer\Utility\TerUtility
+	 * @inject
+	 */
+	protected $terUtility;
 
 	/**
 	 * indicates a successfull upload
@@ -196,6 +209,59 @@ class ExtensionController extends ActionController {
 		}
 
 		$this->view->assign('extensionName', $extensionName);
+	}
+
+	/**
+	 * @param string $extensionName
+	 * @param string $version
+	 */
+	public function compareWithTerVersionAction($extensionName, $version = NULL) {
+		$versions = $this->extensionRepository->findByExtensionKeyOrderedByVersion($extensionName);
+		$this->view->assign('extensionName', $extensionName);
+		$this->view->assign('versions', $versions);
+		if($version !== NULL) {
+			if(!class_exists('\SebastianBergmann\Diff\Differ')) {
+				$this->addFlashMessage('Please install phpunit extension to get a real diff of the files', '', FlashMessage::INFO);
+			}
+
+			/** @var \TYPO3\CMS\Extensionmanager\Domain\Model\Extension $version */
+			$version = $this->extensionRepository->findOneByExtensionKeyAndVersion($extensionName, $version);
+			$fetchedData = $this->terUtility->downloadToTemp($version);
+			$this->view->assign('selectedVersion', $version);
+			$this->view->assign('fetchedData', $fetchedData);
+
+			$filestate = array();
+			$extensionPath = ExtensionManagementUtility::extPath($extensionName);
+			foreach($fetchedData['FILES'] as $filename => $file) {
+				if(!file_exists($extensionPath . '/' . $filename)) {
+					$filestate[$filename] = array(
+						'state' => FALSE,
+						'message' => 'File does not exist locally'
+					);
+					continue;
+				}
+				if(file_get_contents($extensionPath . '/' . $filename) === $file['content']) {
+					$filestate[$filename] = array(
+						'state' => TRUE,
+						'message' => 'Files are similar.'
+					);
+					continue;
+				} else {
+					$diff = NULL;
+					if(class_exists('\SebastianBergmann\Diff\Differ')) {
+						$differ = new \SebastianBergmann\Diff\Differ();
+						$diff = $differ->diffToArray(file_get_contents($extensionPath . '/' . $filename), $file['content']);
+					}
+					$filestate[$filename] = array(
+						'state' => FALSE,
+						'diff' => $diff,
+						'message' => 'Files are not similar.'
+					);
+					continue;
+				}
+			}
+			$this->view->assign('fileStates', $filestate);
+		}
 	}
 
 	/**
