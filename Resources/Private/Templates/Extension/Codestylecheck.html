@@ -33,6 +33,13 @@
 					</tbody>
 				</table>
 			</f:form>
+
+			<h2>Commandline Usage</h2>
+			<pre>
+./bin/phpcs --standard=TYPO3CMS -n typo3conf/ext/themes/Classes/
+./bin/phpcs --standard=TYPO3CMS -n typo3conf/ext/themes/Classes/ --report=gitblame
+./bin/phpcs --standard=TYPO3CMS -n typo3conf/ext/themes/Classes/ --report=summary
+			</pre>
 		</f:then>
 		<f:else>
 			<dev:flashMessage title="Package is Missing">
