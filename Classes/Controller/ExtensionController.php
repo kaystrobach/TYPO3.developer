@@ -51,6 +51,13 @@ class ExtensionController extends ActionController {
 	}
 
 	/**
+	 * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+	 */
+	public function getBeUser() {
+		return $GLOBALS['BE_USER'];
+	}
+
+	/**
 	 * @param string $extensionName
 	 */
 	public function indexAction($extensionName = '') {
@@ -63,7 +70,18 @@ class ExtensionController extends ActionController {
 	 * @param string $extensionName
 	 */
 	public function uploadAction($extensionName = '') {
+		$beUser = $this->getBeUser();
+		$data = $beUser->getModuleData('developer/controller/extension');
+
+		if(($extensionName === '') && (isset($data['extensionName']))) {
+			$extensionName = $data['extensionName'];
+		}
 		$this->view->assign('extensionName', $extensionName);
+
+		if(isset($data['username'])) {
+			$this->view->assign('username', $data['username']);
+		}
+
 	}
 
 	/**
@@ -76,6 +94,15 @@ class ExtensionController extends ActionController {
 	 * @param string $version
 	 */
 	public function uploadProcessAction($extensionName, $username, $password, $description) {
+		$beUser = $this->getBeUser();
+		$beUser->pushModuleData(
+			'developer/controller/extension',
+			array(
+				'username' => $username,
+				'extensionName' => $extensionName
+			)
+		);
+
 		$upload = new TerUpload();
 		$upload->setExtensionKey($extensionName)
 			->setUsername($username)
