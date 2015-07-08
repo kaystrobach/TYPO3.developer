@@ -1,0 +1,81 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+
+	<h1>Directories</h1>
+
+	<table class="t3-table">
+		<colgroup>
+			<col width="30" >
+			<col width="*" >
+		</colgroup>
+		<thead>
+			<tr>
+				<th>
+					state
+				</th>
+				<th>
+					directory
+				</th>
+			</tr>
+		</thead>
+		<f:for each="{directories}" as="state" key="directory">
+			<tr>
+				<td>
+					<f:if condition="{state}">
+						<f:then>
+							<span class="t3-icon t3-icon-status t3-icon-status-dialog t3-icon-dialog-ok"></span>
+						</f:then>
+						<f:else>
+							<span class="t3-icon t3-icon-status t3-icon-status-dialog t3-icon-dialog-warning"></span>
+						</f:else>
+					</f:if>
+				</td>
+				<td>
+					{directory}
+				</td>
+			</tr>
+		</f:for>
+	</table>
+
+	<h1>Files</h1>
+
+	<table class="t3-table">
+		<colgroup>
+			<col width="30" >
+			<col width="*" >
+		</colgroup>
+		<thead>
+			<tr>
+				<th>
+					state
+				</th>
+				<th>
+					file
+				</th>
+			</tr>
+		</thead>
+		<f:for each="{files}" as="state" key="file">
+			<tr>
+				<td>
+					<f:if condition="{state}">
+						<f:then>
+							<span class="t3-icon t3-icon-status t3-icon-status-dialog t3-icon-dialog-ok"></span>
+						</f:then>
+						<f:else>
+							<span class="t3-icon t3-icon-status t3-icon-status-dialog t3-icon-dialog-warning"></span>
+						</f:else>
+					</f:if>
+				</td>
+				<td>
+					{file}
+				</td>
+			</tr>
+		</f:for>
+	</table>
+</f:section>
