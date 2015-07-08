@@ -69,6 +69,10 @@ class DefaultController extends ActionController {
 		array(
 			'key' => 'examples',
 			'description' => 'Contains some code examples on how to use the TYPO3 core API.',
+		),
+		array(
+			'key' => 'lfeditor',
+			'description' => 'Easy to use editor for xlf and locallang files.',
 		)
 	);
 
