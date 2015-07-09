@@ -1,0 +1,34 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+	<h1>Create a distribution</h1>
+	<f:form action="index">
+		<table class="t3-table">
+			<tbody>
+			<tr>
+				<td>
+					extension key
+				</td>
+				<td>
+					<f:form.textfield name="extensionName" class="expandField"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					actions
+				</td>
+				<td>
+					<f:form.button additionalAttributes="{formaction: '{f:uri.action(action:\'create\', controller:\'Distribution\')}'}">
+						create
+					</f:form.button>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</f:form>
+</f:section>

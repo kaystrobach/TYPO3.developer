@@ -12,6 +12,8 @@ namespace KayStrobach\Developer\Services;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Dbal\Database\DatabaseConnection;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 
 class T3dService {
 	/**
@@ -19,8 +21,8 @@ class T3dService {
 	 */
 	protected $export;
 
-	public function export($filename) {
-		$this->export = GeneralUtility::makeInstance(\TYPO3\CMS\Impexp\ImportExport::class);
+	public function export($saveAt = 'php://stdout') {
+		$this->export = GeneralUtility::makeInstance('TYPO3\CMS\Impexp\ImportExport');
 		$this->export->init(0, 'export');
 		$this->export->setCharset('utf-8');
 		$this->export->maxFileSize = 10000 * 1024;
@@ -29,7 +31,9 @@ class T3dService {
 		$this->export->extensionDependencies = array();
 		$this->export->showStaticRelations = array();
 		$this->export->includeExtFileResources = FALSE;
-		$this->export->setSaveFilesOutsideExportFile(TRUE);
+		if(method_exists($this->export, 'setSaveFilesOutsideExportFile')) {
+			$this->export->setSaveFilesOutsideExportFile(TRUE);
+		}
 		$this->export->setHeaderBasics();
 
 		$this->export->relStaticTables = array('_ALL');
@@ -51,7 +55,7 @@ class T3dService {
 		);
 
 		$pid = 0;
-		$tree = GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Tree\View\PageTreeView::class);
+		$tree = GeneralUtility::makeInstance('TYPO3\CMS\Backend\Tree\View\PageTreeView');
 		$tree->init('');
 		$HTML = '';
 		$tree->tree[] = array('row' => $sPage, 'HTML' => $HTML);
@@ -63,6 +67,8 @@ class T3dService {
 		if (count($tree->buffer_idH)) {
 			$idH[$pid]['subrow'] = $tree->buffer_idH;
 		}
+		$tree = NULL;
+		unset($tree);
 
 		$flatList = $this->export->setPageTree($idH);
 		foreach ($flatList as $k => $value) {
@@ -82,16 +88,21 @@ class T3dService {
 		// MUST be after the DBrelations are set so that files from ALL added records are included!
 		$this->export->export_addFilesFromRelations();
 
-		$this->export->export_addFilesFromSysFilesRecords();
+		#$this->export->export_addFilesFromSysFilesRecords();
 
 		$out = $this->export->compileMemoryToFileContent();
 		$fExt = ($this->export->doOutputCompress() ? '-z' : '') . '.t3d';
 
-		Header('Content-Type: application/octet-stream');
-		Header('Content-Length: ' . strlen($out));
-		Header('Content-Disposition: attachment; filename=' . date('Y-m-d-h-i-s').'.t3d');
-		echo $out;
-		die;
+		if($saveAt === 'php://stdout') {
+			Header('Content-Type: application/octet-stream');
+			Header('Content-Length: ' . strlen($out));
+			Header('Content-Disposition: attachment; filename=' . date('Y-m-d-h-i-s').'.t3d');
+			echo $out;
+			die();
+		}
+		file_put_contents($saveAt, $out);
+		$out = NULL;
+		unset($out);
 	}
 
 	public function import($filename) {
@@ -110,16 +121,16 @@ class T3dService {
 		if (!is_array($tables)) {
 			return;
 		}
-		$db = $GLOBALS['TYPO3_DB'];
+		$db = $this->getDatabaseConnection();
 		foreach ($GLOBALS['TCA'] as $table => $value) {
 			if ($table != 'pages' && (in_array($table, $tables) || in_array('_ALL', $tables))) {
-				#if ($this->getBackendUser()->check('tables_select', $table) && !$GLOBALS['TCA'][$table]['ctrl']['is_static']) {
+				if ($this->getBeUser()->check('tables_select', $table) && !$GLOBALS['TCA'][$table]['ctrl']['is_static']) {
 					$res = $this->exec_listQueryPid($table, $k, MathUtility::forceIntegerInRange($maxNumber, 1));
 					while ($subTrow = $db->sql_fetch_assoc($res)) {
 						$this->export->export_addRecord($table, $subTrow);
 					}
 					$db->sql_free_result($res);
-				#}
+				}
 			}
 		}
 	}
@@ -153,5 +164,12 @@ class T3dService {
 	 */
 	protected function getDatabaseConnection() {
 		return $GLOBALS['TYPO3_DB'];
+	}
+
+	/**
+	 * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+	 */
+	public function getBeUser() {
+		return $GLOBALS['BE_USER'];
 	}
 }
