@@ -149,4 +149,16 @@ class DefaultController extends ActionController {
 			}
 		}
 	}
+
+	public function downloadComposerAction() {
+		try {
+			GeneralUtility::mkdir_deep(PATH_site . 'bin');
+			if(!file_exists(PATH_site . 'bin/composer.phar')) {
+				file_put_contents(PATH_site . 'bin/composer.phar', GeneralUtility::getUrl('https://getcomposer.org/composer.phar'));
+			}
+		} catch(\RuntimeException $e) {
+			$this->addFlashMessage($e->getMessage());
+		}
+		$this->redirect('index');
+	}
 }

@@ -6,7 +6,7 @@ if (TYPO3_MODE === 'BE') {
 		'mod1', // Name of the module
 		'', // Position of the module
 		array(// Allowed controller action combinations
-			'Default'      => 'index',
+			'Default'      => 'index,downloadComposer',
 			'Community'    => 'index,documentation',
 			'Information'  => 'index,listPhpInfo,environmentVariables,hooks,signals,xclass',
 			'Language'     => 'index,xmlToXlf',
