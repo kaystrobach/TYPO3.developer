@@ -1,0 +1,52 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+	<f:link.action action="new">
+		<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-new"></span>
+	</f:link.action>
+</f:section>
+
+<f:section name="Content">
+	<h1>Distribution module</h1>
+
+	<table class="t3-table">
+		<thead>
+			<tr>
+				<th>
+					Distribtion
+				</th>
+				<th>
+					Data Directory
+				</th>
+				<th>
+					Imported?
+				</th>
+			</tr>
+		</thead>
+		<f:for each="{distributions}" as="distribution">
+			<tr>
+				<td>
+					{distribution.key}<br>
+					<small>{distribution.title}</small>
+				</td>
+				<td>
+					{distribution.distributionFilesImportPath}
+				</td>
+				<td>
+					<f:if condition="{distribution.distributionFilesImported}">
+						<f:then>
+							<span title="" class="t3-icon t3-icon-status t3-icon-status-dialog t3-icon-dialog-ok"> </span>
+							<f:link.action action="resetStatus" arguments="{extensionName:distribution.key}">
+								<span class="t3-icon fa t3-icon fa fa-trash" title="Reset status"> </span>
+							</f:link.action>
+						</f:then>
+						<f:else>
+
+						</f:else>
+					</f:if>
+				</td>
+			</tr>
+		</f:for>
+	</table>
+</f:section>

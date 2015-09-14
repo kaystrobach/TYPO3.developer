@@ -26,6 +26,12 @@ class DistributionController extends ActionController {
 	protected $packageManager;
 
 	/**
+	 * @var \TYPO3\CMS\Core\Registry
+	 * @inject
+	 */
+	protected $registry;
+
+	/**
 	 * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
 	 */
 	public function getBeUser() {
@@ -33,9 +39,10 @@ class DistributionController extends ActionController {
 	}
 
 	/**
-	 * @param string $extensionName
+	 * returns all distributions
+	 * @return array
 	 */
-	public function indexAction($extensionName = '') {
+	protected function getDistributions() {
 		$allExtensions = $this->listUtility->enrichExtensionsWithEmConfAndTerInformation($this->listUtility->getAvailableExtensions());
 		$distributions = array();
 
@@ -45,8 +52,14 @@ class DistributionController extends ActionController {
 				$distributions[$extension['key']] = (object) $extension;
 			}
 		}
+		return $distributions;
+	}
 
-		$this->view->assign('extensions', $distributions);
+	/**
+	 * @param string $extensionName
+	 */
+	public function indexAction($extensionName = '') {
+		$this->view->assign('extensions', $this->getDistributions());
 		$this->view->assign('extension', $extensionName);
 	}
 
@@ -57,7 +70,7 @@ class DistributionController extends ActionController {
 
 	/**
 	 * @param string $extensionName
-	 * @param string $compatVersions
+	 * @param string $compatVersion
 	 */
 	public function createAction($extensionName, $compatVersion) {
 		try {
@@ -129,5 +142,33 @@ class DistributionController extends ActionController {
 			$this->addFlashMessage('<pre>' . $e->getTraceAsString() . '</pre>', $e->getMessage(), FlashMessage::ERROR);
 		}
 		$this->redirect('index');
+	}
+
+	public function statusAction() {
+		$distributions = $this->getDistributions();
+
+		foreach($distributions as $key => $distribution) {
+			$packagePath = $this->packageManager->getPackage($distribution->key)->getPackagePath();
+			$packagePath = substr($packagePath, strlen(PATH_site));
+			$distributions[$key]->distributionFilesImportPath = $packagePath . 'Initialisation/Files';
+			if($this->registry->get('extensionDataImport', $packagePath . 'Initialisation/Files')) {
+				$distributions[$key]->distributionFilesImported = TRUE;
+			}
+		}
+
+		$this->view->assign('distributions', $distributions);
+	}
+
+	/**
+	 * @param string $extensionName
+	 */
+	public function resetStatusAction($extensionName) {
+		$packagePath = $this->packageManager->getPackage($extensionName)->getPackagePath();
+		$packagePath = substr($packagePath, strlen(PATH_site));
+		$this->registry->remove(
+			'extensionDataImport',
+			$packagePath . 'Initialisation/Files'
+		);
+		$this->redirect('status');
 	}
 }
