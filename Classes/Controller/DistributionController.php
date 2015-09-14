@@ -100,7 +100,15 @@ class DistributionController extends ActionController {
 		$this->packageManager->scanAvailablePackages();
 
 		$this->addFlashMessage('Distribution' . $extensionName . ' created, use the other actions to fill it with data and files.');
-		$this->redirect('index');
+
+		$this->redirect(
+			't3dExport',
+			NULL,
+			NULL,
+			array(
+				'extensionName' => $extensionName
+			)
+		);
 	}
 
 	/**
@@ -120,7 +128,15 @@ class DistributionController extends ActionController {
 			$this->addFlashMessage($e->getMessage(), '', AbstractMessage::ERROR);
 			$this->redirect('index');
 		}
-		$this->redirect('index');
+
+		$this->redirect(
+			't3dExport',
+			NULL,
+			NULL,
+			array(
+				'extensionName' => $extensionName
+			)
+		);
 	}
 
 	/**
@@ -141,7 +157,14 @@ class DistributionController extends ActionController {
 		} catch(\Exception $e) {
 			$this->addFlashMessage('<pre>' . $e->getTraceAsString() . '</pre>', $e->getMessage(), FlashMessage::ERROR);
 		}
-		$this->redirect('index');
+		$this->redirect(
+			'index',
+			NULL,
+			NULL,
+			array(
+				'extensionName' => $extensionName
+			)
+		);
 	}
 
 	public function statusAction() {

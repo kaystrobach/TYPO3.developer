@@ -12,7 +12,7 @@ if (TYPO3_MODE === 'BE') {
 			'Language'     => 'index,xmlToXlf',
 			'Sprite'       => 'listSpriteIcons,regenerateSkinFiles,listTableIcons',
 			'Extension'    => 'index,upload,uploadProcess,autoload,autoloadGenerate,codestylecheck,downloadT3x,directoryStructureCheck,compareWithTerVersion',
-			'Distribution' => 'index,new,create,update,edit,t3dExport',
+			'Distribution' => 'index,new,create,update,edit,t3dExport,status,resetStatus',
 			'Tools'        => 'calculate,diff,,cssanalyze',
 			'System'       => 'clearAllCaches,'
 		), array(// Additional configuration
