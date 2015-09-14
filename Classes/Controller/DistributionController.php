@@ -3,13 +3,14 @@
 namespace KayStrobach\Developer\Controller;
 
 
+use FluidTYPO3\Flux\Utility\VersionUtility;
 use KayStrobach\Developer\Services\T3dService;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\Flow\Utility\Files;
 
 class DistributionController extends ActionController {
 	/**
@@ -50,31 +51,34 @@ class DistributionController extends ActionController {
 	}
 
 	public function newAction() {
-
+		$version = VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
+		$this->view->assign('compatVersion', $version['version_main'] . '.' . $version['version_sub'] . '.0-' . $version['version_main'] . '.' . $version['version_sub'] . '.99');
 	}
 
 	/**
 	 * @param string $extensionName
+	 * @param string $compatVersions
 	 */
-	public function createAction($extensionName) {
+	public function createAction($extensionName, $compatVersion) {
 		try {
 			$package = $this->packageManager->getPackage($extensionName);
 			$this->addFlashMessage('Package ' . $extensionName . ' does already exist', '', FlashMessage::ERROR);
 			$this->redirect('index');
 			return;
-		} catch(\TYPO3\Flow\Package\Exception\UnknownPackageException $e) {
+		} catch(\Exception $e) {
 
 		}
 
 		$packageRootPath = PATH_site . 'typo3conf/ext/' . $extensionName . '/';
-		Files::createDirectoryRecursively($packageRootPath);
-		Files::createDirectoryRecursively($packageRootPath . 'Initialisation/Files');
+		GeneralUtility::mkdir_deep($packageRootPath);
+		GeneralUtility::mkdir_deep($packageRootPath . 'Initialisation/Files');
 		$buffer = file_get_contents(ExtensionManagementUtility::extPath('developer') . 'Resources/Private/Pattern/Distribution/ext_emconf.php');
 		$replacements = array(
 			'###title###' => 'Distribution ' . time(),
 			'###distribution###' => '',
 			'###author###' => $this->getBeUser()->user['realName'],
 			'###email###' => $this->getBeUser()->user['email'],
+			'###version###' => $compatVersion,
 		);
 		$buffer = str_replace(array_keys($replacements), array_values($replacements), $buffer);
 		GeneralUtility::writeFile($packageRootPath . 'ext_emconf.php', $buffer);
@@ -94,9 +98,9 @@ class DistributionController extends ActionController {
 			$distributionPathFileadmin = PATH_site . 'fileadmin/' . $extensionName;
 			$packagePath = $this->packageManager->getPackage($extensionName)->getPackagePath();
 			if(is_dir($packagePath)) {
-				Files::removeDirectoryRecursively($packagePath . 'Initialisation');
-				Files::createDirectoryRecursively($packagePath . 'Initialisation/Files');
-				Files::copyDirectoryRecursively($distributionPathFileadmin, $packagePath . 'Initialisation/Files');
+				GeneralUtility::rmdir($packagePath . 'Initialisation', TRUE);
+				GeneralUtility::mkdir_deep($packagePath . 'Initialisation/Files');
+				GeneralUtility::copyDirectory($distributionPathFileadmin, $packagePath . 'Initialisation/Files');
 				$this->addFlashMessage('Copied files from ' . $distributionPathFileadmin . ' to ' . $packagePath . 'Initialisation/Files');
 			}
 		} catch(\Exception $e) {
@@ -114,7 +118,7 @@ class DistributionController extends ActionController {
 		try {
 			$packagePath = $this->packageManager->getPackage($extensionName)->getPackagePath();
 			$t3dFileName = $packagePath . 'Initialisation/data.t3d';
-			Files::createDirectoryRecursively($packagePath . 'Initialisation');
+			GeneralUtility::mkdir_deep($packagePath . 'Initialisation');
 			if(file_exists($t3dFileName)) {
 				unlink($t3dFileName);
 			}
