@@ -159,6 +159,9 @@ class QueryProcessor implements PostProcessQueryHookInterface, SingletonInterfac
 	 * @return boolean
 	 */
 	public function isQueryRecodingEnabled() {
+		if(!is_object($this->getBackendUser())) {
+			return FALSE;
+		}
 		return (bool) $this->getBackendUser()->getSessionData('developer_record_queries');
 	}
 
