@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Extension to help developers',
 	'category' => 'be',
 	'shy' => 0,
-	'version' => '0.2.0',
+	'version' => '0.2.1',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -34,7 +34,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.2.0-7.0.99',
+			'typo3' => '6.2.0-7.6.99',
 		),
 		'conflicts' => array(
 		),
