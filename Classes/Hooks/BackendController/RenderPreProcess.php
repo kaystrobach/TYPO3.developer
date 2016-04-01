@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 class RenderPreProcess
 {
 	public function addBackendItems() {
+		return;
 		$this->getBackendController()->addToolbarItem('developer', 'KayStrobach\Developer\Backend\ToolbarItems\QueryRecorderLegacy');
 		$this->getBackendController()->addCss(
 			'
