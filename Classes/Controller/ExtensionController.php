@@ -202,6 +202,15 @@ class ExtensionController extends ActionController {
 	 * @param string $path
 	 */
 	public function codestylecheckAction($extensionName = '', $path = '') {
+
+		$phpcsPath = PATH_site.'typo3temp/phpcs.phar';
+
+		if(!file_exists($phpcsPath)) {
+			file_put_contents($phpcsPath, GeneralUtility::getUrl('https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar'));
+		}
+
+
+
 		$cleanedPath = NULL;
 		if($extensionName) {
 			$cleanedPath = ExtensionManagementUtility::extPath($extensionName);
@@ -209,11 +218,10 @@ class ExtensionController extends ActionController {
 			$cleanedPath = $path;
 		}
 
-		if($cleanedPath !== NULL) {
-			$command = PATH_site . 'bin/phpcs --standard=TYPO3CMS -n ' . $cleanedPath;
-			$this->view->assign('command', $command);
-			$this->view->assign('raw', ShellCaptureUtility::execute($command));
-		}
+
+		$command = PHP_BINDIR . '/php ' . $phpcsPath . ' --extensions=php -n ' . $cleanedPath;
+		$this->view->assign('command', $command);
+		$this->view->assign('raw', ShellCaptureUtility::execute($command));
 
 		$this->view->assign('extensionName', $extensionName);
 	}
