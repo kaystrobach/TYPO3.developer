@@ -9,13 +9,15 @@
 namespace KayStrobach\Developer\Command;
 
 
-class ImportCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController {
-	/**
-	 * will import an sql file
-	 */
-	public function importSqlCommand() {
-		$this->outputLine('Will import an sqlfile lateron');
-	}
+class ImportCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController
+{
+    /**
+     * will import an sql file
+     */
+    public function importSqlCommand() 
+    {
+        $this->outputLine('Will import an sqlfile lateron');
+    }
 
 
 } 

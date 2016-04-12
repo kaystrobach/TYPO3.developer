@@ -9,71 +9,76 @@ use TYPO3\Flow\Package\PackageManager;
  *
  * checks if extension is installed
  */
-class IfInstalledViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
-	/**
-	 * Specifies whether the escaping interceptors should be disabled or enabled for the result of renderChildren() calls within this ViewHelper
-	 * @see isChildrenEscapingEnabled()
-	 *
-	 * Note: If this is NULL the value of $this->escapingInterceptorEnabled is considered for backwards compatibility
-	 *
-	 * @var boolean
-	 * @api
-	 */
-	protected $escapeChildren = false;
+class IfInstalledViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
+{
+    /**
+     * Specifies whether the escaping interceptors should be disabled or enabled for the result of renderChildren() calls within this ViewHelper
+  *
+     * @see isChildrenEscapingEnabled()
+     *
+     * Note: If this is NULL the value of $this->escapingInterceptorEnabled is considered for backwards compatibility
+     *
+     * @var boolean
+     * @api
+     */
+    protected $escapeChildren = false;
 
-	/**
-	 * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper
-	 * @see isOutputEscapingEnabled()
-	 *
-	 * @var boolean
-	 * @api
-	 */
-	protected $escapeOutput = false;
-	/**
-	 * @var \TYPO3\CMS\Core\Package\PackageManager
-	 * @inject
-	 */
-	protected $packageManager;
+    /**
+     * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper
+  *
+     * @see isOutputEscapingEnabled()
+     *
+     * @var boolean
+     * @api
+     */
+    protected $escapeOutput = false;
+    /**
+     * @var \TYPO3\CMS\Core\Package\PackageManager
+     * @inject
+     */
+    protected $packageManager;
 
-	/**
-	 * Initializes the "then" and "else" arguments
-	 */
-	public function initializeArguments()
-	{
-		$this->registerArgument('package', 'string', 'package', FALSE);
-	}
+    /**
+     * Initializes the "then" and "else" arguments
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('package', 'string', 'package', false);
+    }
 
-	/**
-	 * @param string $package
-	 * @return string
-	 */
-	public function render($package = '') {
-		$this->packageManager->scanAvailablePackages();
+    /**
+     * @param string $package
+     * @return string
+     */
+    public function render($package = '') 
+    {
+        $this->packageManager->scanAvailablePackages();
 
-		$packages = GeneralUtility::trimExplode(',', $package);
+        $packages = GeneralUtility::trimExplode(',', $package);
 
-		$allAvailable = TRUE;
+        $allAvailable = true;
 
-		foreach($packages as $package) {
-			if(!$this->isInstalled($package)) {
-				$allAvailable = FALSE;
-			}
-		}
+        foreach($packages as $package) {
+            if(!$this->isInstalled($package)) {
+                $allAvailable = false;
+            }
+        }
 
-		if($allAvailable) {
-			return $this->renderThenChild();
-		} else {
-			return $this->renderElseChild();
-		}
-	}
+        if($allAvailable) {
+            return $this->renderThenChild();
+        } else {
+            return $this->renderElseChild();
+        }
+    }
 
-	/**
-	 * @param $package
-	 * @return boolean
-	 */
-	protected function isInstalled($package) {
-		$package = $this->packageManager->getPackageKeyFromComposerName($package);
-		return $this->packageManager->isPackageAvailable($package);
-	}
+    /**
+     * @param $package
+     * @return boolean
+     */
+    protected function isInstalled($package) 
+    {
+        $package = $this->packageManager->getPackageKeyFromComposerName($package);
+        return $this->packageManager->isPackageAvailable($package);
+    }
 
 } 

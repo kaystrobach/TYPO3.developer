@@ -14,14 +14,16 @@ namespace KayStrobach\Developer\ViewHelpers;
  *
  * @package KayStrobach\Developer\ViewHelpers
  */
-class Md5ViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-	/**
-	 * md5's a string
-	 *
-	 * @param string value
-	 * @return string
-	 */
-	public function render($value) {
-		return md5($value);
-	}
+class Md5ViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * md5's a string
+     *
+     * @param  string value
+     * @return string
+     */
+    public function render($value) 
+    {
+        return md5($value);
+    }
 } 

@@ -9,26 +9,28 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  *
  * checks if extension is installed
  */
-class IfInstalledViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
+class IfInstalledViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
+{
 
-	/**
-	 * Initializes the "then" and "else" arguments
-	 */
-	public function initializeArguments()
-	{
-		$this->registerArgument('extensionName', 'string', 'extensionName', FALSE);
-	}
+    /**
+     * Initializes the "then" and "else" arguments
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('extensionName', 'string', 'extensionName', false);
+    }
 
-	/**
-	 * @param string $extensionName
-	 * @return string
-	 */
-	public function render($extensionName = '') {
-		if(ExtensionManagementUtility::isLoaded($extensionName, FALSE)) {
-			return $this->renderThenChild();
-		} else {
-			return $this->renderElseChild();
-		}
-	}
+    /**
+     * @param string $extensionName
+     * @return string
+     */
+    public function render($extensionName = '') 
+    {
+        if(ExtensionManagementUtility::isLoaded($extensionName, false)) {
+            return $this->renderThenChild();
+        } else {
+            return $this->renderElseChild();
+        }
+    }
 
 } 

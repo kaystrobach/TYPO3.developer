@@ -9,12 +9,14 @@
 namespace KayStrobach\Developer\ViewHelpers;
 
 
-class PrintrViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-	/**
-	 * @param mixed $value
-	 * @return string
-	 */
-	public function render($value) {
-		return '<pre>' . print_r($value, TRUE) . '</pre>';
-	}
+class PrintrViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    public function render($value) 
+    {
+        return '<pre>' . print_r($value, true) . '</pre>';
+    }
 } 

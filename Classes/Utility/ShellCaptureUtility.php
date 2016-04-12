@@ -9,14 +9,16 @@
 namespace KayStrobach\Developer\Utility;
 
 
-class ShellCaptureUtility {
-	public static function execute($command) {
-		$handle = popen($command, 'r');
-		$read   = '';
-		while(!feof($handle)) {
-			$read .= fread($handle, 4096);
-		}
-		pclose($handle);
-		return $read;
-	}
+class ShellCaptureUtility
+{
+    public static function execute($command) 
+    {
+        $handle = popen($command, 'r');
+        $read   = '';
+        while(!feof($handle)) {
+            $read .= fread($handle, 4096);
+        }
+        pclose($handle);
+        return $read;
+    }
 } 

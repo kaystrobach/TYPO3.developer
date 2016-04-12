@@ -7,46 +7,7 @@
 
 <f:section name="Content">
 	<h1>Check Coding Guidelines on extensions</h1>
-	<dev:package.IfInstalled package="typo3-ci/typo3cms">
-		<f:then>
-			<f:form action="codestylecheck">
-				<table class="table table-striped table-hover">
-					<tbody>
-						<tr>
-							<td>
-								Extension
-							</td>
-							<td>
-								<f:form.select name="extensionName" options="{extensions}" optionLabelField="key" optionValueField="key" sortByOptionLabel="1" value="{extensionName}" class="expandField"/>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								&nbsp;
-							</td>
-							<td>
-								<f:form.button>
-									Run Check
-								</f:form.button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</f:form>
 
-			<h2>Commandline Usage</h2>
-			<pre>
-./bin/phpcs --standard=TYPO3CMS -n typo3conf/ext/themes/Classes/
-./bin/phpcs --standard=TYPO3CMS -n typo3conf/ext/themes/Classes/ --report=gitblame
-./bin/phpcs --standard=TYPO3CMS -n typo3conf/ext/themes/Classes/ --report=summary
-			</pre>
-		</f:then>
-		<f:else>
-			<dev:flashMessage title="Package is Missing">
-				This module is not useable without the composer package "typo3-ci/typo3cms"!
-			</dev:flashMessage>
-		</f:else>
-	</dev:package.IfInstalled>
 	<f:if condition="{raw}">
 		<h2>Command</h2>
 		<dev:format.code title="command" language="sh">{command}</dev:format.code>

@@ -19,34 +19,41 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  *
  * @package KayStrobach\Developer\Controller
  */
-class ToolsController extends ActionController{
-	/**
-	 * simply calculator
-	 */
-	public function calculateAction() {
+class ToolsController extends ActionController
+{
+    /**
+     * simply calculator
+     */
+    public function calculateAction() 
+    {
 
-	}
+    }
 
-	/**
-	 * diff 2 textareas
-	 */
-	public function diffAction() {
+    /**
+     * diff 2 textareas
+     */
+    public function diffAction() 
+    {
 
-	}
+    }
 
-	/**
-	 * analyze css
-	 * @param string $sourceCode
-	 */
-	public function cssanalyzeAction($sourceCode = NULL) {
-		$this->view->assign('sourceCode', $sourceCode);
-		if($sourceCode !== NULL) {
-			/** @var \KayStrobach\Developer\Services\CssAnalyzeService $cssAnalyzeService */
-			$cssAnalyzeService = GeneralUtility::makeInstance('KayStrobach\Developer\Services\CssAnalyzeService');
-			$this->view->assign(
-				'result',
-				$cssAnalyzeService->getHierarchy($sourceCode)
-			);
-		}
-	}
+    /**
+     * analyze css
+  *
+     * @param string $sourceCode
+     */
+    public function cssanalyzeAction($sourceCode = null) 
+    {
+        $this->view->assign('sourceCode', $sourceCode);
+        if($sourceCode !== null) {
+            /**
+ * @var \KayStrobach\Developer\Services\CssAnalyzeService $cssAnalyzeService 
+*/
+            $cssAnalyzeService = GeneralUtility::makeInstance('KayStrobach\Developer\Services\CssAnalyzeService');
+            $this->view->assign(
+                'result',
+                $cssAnalyzeService->getHierarchy($sourceCode)
+            );
+        }
+    }
 } 

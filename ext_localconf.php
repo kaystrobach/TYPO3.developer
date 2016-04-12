@@ -7,10 +7,10 @@
  */
 $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
 $signalSlotDispatcher->connect(
-	'TYPO3\\CMS\\Extensionmanager\\ViewHelpers\\ProcessAvailableActionsViewHelper',
-	'processActions',
-	'KayStrobach\\Developer\\Slots\\ExtensionManager',
-	'processActions'
+    'TYPO3\\CMS\\Extensionmanager\\ViewHelpers\\ProcessAvailableActionsViewHelper',
+    'processActions',
+    'KayStrobach\\Developer\\Slots\\ExtensionManager',
+    'processActions'
 );
 
 /**
@@ -18,10 +18,10 @@ $signalSlotDispatcher->connect(
  */
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerExtDirectComponent(
-	'TYPO3.Ajax.ExtDirect.Developer',
-	'KayStrobach\Developer\ExtDirect\CommandsExtDirect',
-	NULL,
-	'user,group'
+    'TYPO3.Ajax.ExtDirect.Developer',
+    'KayStrobach\Developer\ExtDirect\CommandsExtDirect',
+    null,
+    'user,group'
 );
 
 /**

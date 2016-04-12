@@ -18,22 +18,27 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  *
  * @package KayStrobach\Developer\Controller
  */
-class SystemController extends ActionController{
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager = NULL;
+class SystemController extends ActionController
+{
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @inject
+     */
+    protected $objectManager = null;
 
-	/**
-	 * really clears all caches
-	 * @param bool $execute
-	 */
-	public function clearAllCachesAction($execute = TRUE) {
-		if($execute === TRUE) {
-			/** @var \TYPO3\CMS\Core\Cache\CacheManager $clearCacheService */
-			$clearCacheService = $this->objectManager->get('TYPO3\CMS\Core\Cache\CacheManager');
-			$clearCacheService->flushCaches();
-		}
-	}
+    /**
+     * really clears all caches
+  *
+     * @param bool $execute
+     */
+    public function clearAllCachesAction($execute = true) 
+    {
+        if($execute === true) {
+            /**
+ * @var \TYPO3\CMS\Core\Cache\CacheManager $clearCacheService 
+*/
+            $clearCacheService = $this->objectManager->get('TYPO3\CMS\Core\Cache\CacheManager');
+            $clearCacheService->flushCaches();
+        }
+    }
 }
