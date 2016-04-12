@@ -22,8 +22,8 @@ class T3dService {
 	protected $export;
 
 	public function export($saveAt = 'php://stdout') {
-		$this->export = GeneralUtility::makeInstance('TYPO3\CMS\Impexp\ImportExport');
-		$this->export->init(0, 'export');
+		$this->export = GeneralUtility::makeInstance(\TYPO3\CMS\Impexp\ImportExport::class);
+		$this->export->init();
 		$this->export->setCharset('utf-8');
 		$this->export->maxFileSize = 10000 * 1024;
 		$this->export->excludeMap = array();

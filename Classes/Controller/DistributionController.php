@@ -3,7 +3,6 @@
 namespace KayStrobach\Developer\Controller;
 
 
-use FluidTYPO3\Flux\Utility\VersionUtility;
 use KayStrobach\Developer\Services\T3dService;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -95,7 +94,7 @@ class DistributionController extends ActionController {
 		);
 		$buffer = str_replace(array_keys($replacements), array_values($replacements), $buffer);
 		GeneralUtility::writeFile($packageRootPath . 'ext_emconf.php', $buffer);
-		copy(PATH_site . 'typo3/gfx/typo3.png', $packageRootPath . 'ext_icon.png');
+		copy(PATH_site . 'typo3/sysext/backend/Resources/Public/Images/Logo.png', $packageRootPath . 'ext_icon.png');
 
 		$this->packageManager->scanAvailablePackages();
 

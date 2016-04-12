@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Documentation\Slots\ExtensionManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use KayStrobach\Developer\Utility\ShellCaptureUtility;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 
 /**
@@ -54,14 +55,20 @@ class ExtensionController extends ActionController {
 	/**
 	 * global init view to have the list of extensions available
 	 */
-	public function initializeView() {
+	public function initializeView(ViewInterface $view) {
 		$extensionArray = $this->listUtility->getAvailableExtensions();
 		$extensionObjects = array();
+		$allExtensionObjects = array();
 		foreach($extensionArray as $extension) {
-			$extensionObjects[$extension['key']] = (object) $extension;
+			if($extension['type'] !== 'System') {
+				$extensionObjects[$extension['key']] = (object) $extension;
+			}
+			$allExtensionObjects[$extension['key']] = (object) $extension;
 		}
 		ksort($extensionObjects);
 		$this->view->assign('extensions', $extensionObjects);
+		ksort($allExtensionObjects);
+		$this->view->assign('allExtensions', $allExtensionObjects);
 	}
 
 	/**

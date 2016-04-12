@@ -10,6 +10,22 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  * checks if a given function exists is installed
  */
 class FunctionExistsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
+	/**
+	 * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper
+	 * @see isOutputEscapingEnabled()
+	 *
+	 * @var boolean
+	 * @api
+	 */
+	protected $escapeOutput = false;
+
+	/**
+	 * Initializes the "then" and "else" arguments
+	 */
+	public function initializeArguments()
+	{
+		$this->registerArgument('function', 'string', 'package', FALSE);
+	}
 
 	/**
 	 * @param string $function

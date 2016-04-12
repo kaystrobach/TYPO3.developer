@@ -30,11 +30,6 @@
 							<f:be.menus.actionMenuItem label="XClasses" controller="Information" action="xclass" />
 						</dev:be.menus.actionMenuItemGroup>
 
-						<dev:be.menus.actionMenuItemGroup label="Sprite">
-							<f:be.menus.actionMenuItem label="Sprite: Sprite Icons" controller="Sprite" action="listSpriteIcons" />
-							<f:be.menus.actionMenuItem label="Sprite: Table Icons" controller="Sprite" action="listTableIcons" />
-						</dev:be.menus.actionMenuItemGroup>
-
 						<dev:be.menus.actionMenuItemGroup label="Extension">
 							<f:be.menus.actionMenuItem label="Extension: index" controller="Extension" action="index" />
 							<f:be.menus.actionMenuItem label="Extension: ext_autoload.php" controller="Extension" action="autoload" />
@@ -80,7 +75,7 @@
 	<div id="typo3-docbody">
 		<div id="typo3-inner-docbody">
 			<f:render section="BeforeContent" optional="1"/>
-			<f:flashMessages renderMode="div"/>
+			<f:flashMessages/>
 			<f:render section="Content" />
 		</div>
 	</div>

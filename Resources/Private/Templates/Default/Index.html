@@ -1,4 +1,5 @@
 {namespace dev=KayStrobach\Developer\ViewHelpers}
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
 
 <f:layout name="Default" />
 
@@ -23,7 +24,7 @@
 	</p>
 
 	<h2>Application context</h2>
-	<table class="t3-table">
+	<table class="table table-striped table-hover">
 		<tbody>
 		<tr>
 			<td>
@@ -62,16 +63,16 @@
 
 	<small>To enable these extension, please use the extensionmanager.</small>
 
-	<table class="t3-table">
+	<table class="table table-striped table-hover">
 		<f:for each="{extensions}" as="extension">
 			<tr>
 				<td>
 					<dev:extension.IfInstalled extensionName="{extension.key}">
 						<f:then>
-							<f:Be.Buttons.Icon icon="actions-system-extension-uninstall" />
+							<core:icon identifier="actions-system-extension-uninstall" />
 						</f:then>
 						<f:else>
-							<f:Be.Buttons.Icon icon="actions-system-extension-install" />
+							<core:icon identifier="actions-system-extension-install" />
 						</f:else>
 					</dev:extension.IfInstalled>
 
@@ -88,7 +89,7 @@
 
 						</f:then>
 						<f:else>
-							composer require --dev typo3-ter/{extension.key}
+							<code>composer require --dev typo3-ter/{extension.key}</code>
 						</f:else>
 					</dev:extension.IfInstalled>
 				</td>
@@ -100,16 +101,16 @@
 
 	<small>To enable these packages, please use composer.</small>
 
-	<table class="t3-table">
+	<table class="table table-striped table-hover">
 		<f:for each="{composerPackages}" as="extension">
 			<tr>
 				<td>
 					<dev:package.IfInstalled package="{extension.key}">
 						<f:then>
-							<f:Be.Buttons.Icon icon="actions-system-extension-uninstall" />
+							<core:icon identifier="actions-system-extension-uninstall" />
 						</f:then>
 						<f:else>
-							<f:Be.Buttons.Icon icon="actions-system-extension-install" />
+							<core:icon identifier="actions-system-extension-install" />
 						</f:else>
 					</dev:package.IfInstalled>
 				</td>
@@ -123,7 +124,7 @@
 					<dev:package.IfInstalled package="{extension.key}">
 						<f:then></f:then>
 						<f:else>
-							composer require --dev {extension.key}
+							<code>composer require --dev {extension.key}</code>
 						</f:else>
 					</dev:package.IfInstalled>
 				</td>
@@ -135,16 +136,16 @@
 
 	<small>To enable these extension, please adjust your php settings.</small>
 
-	<table class="t3-table">
+	<table class="table table-striped table-hover">
 		<f:for each="{phpExtensions}" as="extension">
 			<tr>
 				<td>
 					<dev:extension.FunctionExists function="{extension.function}">
 						<f:then>
-							<f:Be.Buttons.Icon icon="actions-system-extension-uninstall" />
+							<core:icon identifier="actions-system-extension-uninstall" />
 						</f:then>
 						<f:else>
-							<f:Be.Buttons.Icon icon="actions-system-extension-install" />
+							<core:icon identifier="actions-system-extension-install" />
 						</f:else>
 					</dev:extension.FunctionExists>
 

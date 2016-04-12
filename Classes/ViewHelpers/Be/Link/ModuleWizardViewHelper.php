@@ -9,7 +9,18 @@
 namespace KayStrobach\Developer\ViewHelpers\Be\Link;
 
 
-class ModuleWizardViewHelper extends ModuleUrlViewHelper {
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
+class ModuleWizardViewHelper extends AbstractViewHelper{
+	/**
+	 * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper
+	 * @see isOutputEscapingEnabled()
+	 *
+	 * @var boolean
+	 * @api
+	 */
+	protected $escapeOutput = false;
 
 	/**
 	 * @param string $moduleName
@@ -46,11 +57,11 @@ class ModuleWizardViewHelper extends ModuleUrlViewHelper {
 	}
 
 	/**
-	 * @param string $iconName
+	 * @param string $icon
 	 * @return string
 	 */
 	public function getIcon($icon) {
-		return $icon === '' ? '' : \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIcon($icon);
+
 	}
 
 	/**
@@ -60,6 +71,30 @@ class ModuleWizardViewHelper extends ModuleUrlViewHelper {
 	 */
 	public function buildTag($onClick, $icon, $title = '') {
 		return '<a href="#" onclick="' . $onClick . '" title="' . $title . '" >' . $icon . '</a>';
+	}
+
+	/**
+	 * @param $moduleName
+	 * @param $config
+	 * @return string
+	 */
+	protected function getUrl($moduleName, $config, $blindLinkOptions = NULL, $allowedExtensions = NULL) {
+		$config = $config + array(
+				'mode' => 'wizard'
+			);
+		if(!array_key_exists('P', $config)) {
+			$config['P'] = array();
+		}
+		if(!array_key_exists('params', $config['P'])) {
+			$config['P']['params'] = array();
+		}
+		if($blindLinkOptions !== NULL) {
+			$config['P']['params']['blindLinkOptions'] = $blindLinkOptions;
+		}
+		if($allowedExtensions !== NULL) {
+			$config['P']['params']['allowedExtensions'] = $allowedExtensions;
+		}
+		return BackendUtility::getModuleUrl($moduleName, $config);
 	}
 
 } 

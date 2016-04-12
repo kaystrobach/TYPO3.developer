@@ -3,9 +3,7 @@
 namespace KayStrobach\Developer\Hooks\DatabaseConnection;
 
 
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Database\PostProcessQueryHookInterface;
-use TYPO3\CMS\Core\Database\PreProcessQueryHookInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 
 class QueryProcessor implements PostProcessQueryHookInterface, SingletonInterface
