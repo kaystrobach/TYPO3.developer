@@ -10,7 +10,6 @@ if (TYPO3_MODE === 'BE') {
 			'Community'    => 'index,documentation',
 			'Information'  => 'index,listPhpInfo,environmentVariables,hooks,signals,xclass',
 			'Language'     => 'index,xmlToXlf',
-			'Sprite'       => 'listSpriteIcons,regenerateSkinFiles,listTableIcons',
 			'Extension'    => 'index,upload,uploadProcess,autoload,autoloadGenerate,codestylecheck,downloadT3x,directoryStructureCheck,compareWithTerVersion',
 			'Distribution' => 'index,new,create,update,edit,t3dExport,status,resetStatus',
 			'Tools'        => 'calculate,diff,,cssanalyze',
@@ -24,28 +23,18 @@ if (TYPO3_MODE === 'BE') {
 }
 
 /**
- * add sprites
- */
-\TYPO3\CMS\Backend\Sprite\SpriteManager::addSingleIcons(
-	array(
-		'wrench' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/iconmonstr-wrench-7-icon-16.png',
-	),
-	$_EXTKEY
-);
-
-/**
  * query logging
  */
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_db.php']['queryProcessors'][] = 'KayStrobach\Developer\Hooks\DatabaseConnection\QueryProcessor';
-if (TYPO3_MODE == 'BE') {
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/backend.php']['renderPreProcess'][] = 'KayStrobach\Developer\Hooks\BackendController\RenderPreProcess->addBackendItems';
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
-		'developer::enableQueryRecording',
-		'KayStrobach\Developer\Hooks\DatabaseConnection\QueryProcessor->enableQueryRecording'
-	);
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
-		'developer::disableQueryRecording',
-		'KayStrobach\Developer\Hooks\DatabaseConnection\QueryProcessor->disableQueryRecording'
-	);
-}
+#$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_db.php']['queryProcessors'][] = 'KayStrobach\Developer\Hooks\DatabaseConnection\QueryProcessor';
+#if (TYPO3_MODE == 'BE') {
+#	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/backend.php']['renderPreProcess'][] = 'KayStrobach\Developer\Hooks\BackendController\RenderPreProcess->addBackendItems';
+#	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+#		'developer::enableQueryRecording',
+#		'KayStrobach\Developer\Hooks\DatabaseConnection\QueryProcessor->enableQueryRecording'
+#	);
+#	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+#		'developer::disableQueryRecording',
+#		'KayStrobach\Developer\Hooks\DatabaseConnection\QueryProcessor->disableQueryRecording'
+#	);
+#}
