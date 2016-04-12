@@ -73,8 +73,10 @@ class tx_extdeveval_llxmlsplit
                 $fileContent = t3lib_div::xml2array(t3lib_div::getURL($phpFile));
                 if (@is_array($fileContent)) {
                     return $this->renderForm($fileContent, $phpFile);
-                } else return 'ERROR: File is not XML: '.$fileContent;
-            } else return 'ERROR: '.$fCheck;
+                } else { return 'ERROR: File is not XML: '.$fileContent; 
+                }
+            } else { return 'ERROR: '.$fCheck; 
+            }
         }
     }
 
@@ -161,7 +163,8 @@ class tx_extdeveval_llxmlsplit
                                             } else {
                                                 $OK = 1;
                                             }
-                                        } else $log[] = 'Creating directory '.$dirname.' failed (2)';
+                                        } else { $log[] = 'Creating directory '.$dirname.' failed (2)'; 
+                                        }
                                     }
 
                                     if ($OK) {

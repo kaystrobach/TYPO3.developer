@@ -74,7 +74,8 @@ class tx_extdeveval_submodgetll
         } elseif (strstr($content, '$this->pi_getLL(')) {
             $expStr = '$this->pi_getLL(\'\',\'';
             $expStrSubst = '$this->pi_getLL(\'%s';
-        } else return '<strong>Could not detect any getLL() functions in the file! Sorry.</strong>';
+        } else { return '<strong>Could not detect any getLL() functions in the file! Sorry.</strong>'; 
+        }
 
         $fileParts = explode($expStr, $content);
 
@@ -90,8 +91,8 @@ class tx_extdeveval_submodgetll
             // Try to find function definition - used to create meaningful prefixes:
             $reg =array();
             preg_match('#.*[[:space:]]+function[[:space:]]+([[:alnum:]_]+)[[:space:]]*\(#',  $v, $reg);
-            if ($reg[1])    $f=$reg[1];    // setting the most RECENT function name if new function name is found.
-
+            if ($reg[1]) {    $f=$reg[1];    // setting the most RECENT function name if new function name is found.
+            }
              // Processing splitted content
             if ($k) {    // only >0 keys...
                 $subP = preg_split("|[^\\\\]')|", $v, 2);
@@ -193,7 +194,8 @@ class tx_extdeveval_submodgetll
         foreach($parts as $k => $vParts)    {
             if ($k) {
                 $vAcc.= strtoupper(substr($vParts, 0, 1)).substr($vParts, 1);
-            } else $vAcc.= $vParts;
+            } else { $vAcc.= $vParts; 
+            }
             if ($k==3) {
                 break;
             }

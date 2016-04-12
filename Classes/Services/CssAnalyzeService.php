@@ -68,7 +68,8 @@ class CssAnalyzeService
                 $v = $this->htmlParser->removeFirstAndLastTag($v);
                 $pC = $this->getHierarchy($v, $count-1, $thisSel);
                 $hash = md5(serialize($pC[1]));
-                if (!isset($exampleContentAccum[$hash]))        $exampleContentAccum[$hash]=$v;
+                if (!isset($exampleContentAccum[$hash])) {        $exampleContentAccum[$hash]=$v; 
+                }
 
                 $parts[$k]=array(
                  'tag' => $firstTag,

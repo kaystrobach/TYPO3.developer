@@ -72,7 +72,8 @@ class tx_extdeveval_tmpl
         if ($this->table=='sys_template' || $this->table=='static_template') {
 
             $where = ($this->table=='sys_template') ? 'NOT deleted' : '1=1';
-            if (intval($this->uid))    $where.=' AND uid='.intval($this->uid);
+            if (intval($this->uid)) {    $where.=' AND uid='.intval($this->uid); 
+            }
             $query = 'SELECT uid,pid,constants,config,title FROM '.addslashes($this->table).' WHERE '.$where.' ORDER BY title';
 
             $res = mysql(TYPO3_db, $query);

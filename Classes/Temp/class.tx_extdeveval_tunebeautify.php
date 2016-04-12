@@ -412,10 +412,11 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
             // Kill nasty tabs
             $str = trim(str_replace("\t", ' ', $str));
             // Don't delete empty lines if required by user
-            if (!$this->del_line)
-            if (preg_match("/^(\s)*$/", $str)  != 0) {
-                $this->_out(' ');
-                continue;
+            if (!$this->del_line) {
+                if (preg_match("/^(\s)*$/", $str)  != 0) {
+                    $this->_out(' ');
+                    continue;
+                } 
             }
             if ($this->_long_comment) {
                 $this->_comment = true;
@@ -430,13 +431,15 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
                 // Check, if we deal with php-code
                 if (!$this->_new_line_counter and ($i+1) < sizeof($a)) {
                     if ($a[$i+1] == "?" AND $a[$i] == '<') {
-                        if ($this->_outstr) $this->_out(trim($this->_outstr));
+                        if ($this->_outstr) { $this->_out(trim($this->_outstr)); 
+                        }
                          $this->_out('<?php');
                         $this->_indent++;
                         $this->_new_line_counter++;
                         if (($i+4) < sizeof($a)) {
-                            if ($a[$i+2] == "p" AND $a[$i+3] == "h" AND $a[$i+4] == 'p')
-                             $i = $i+3;
+                            if ($a[$i+2] == "p" AND $a[$i+3] == "h" AND $a[$i+4] == 'p') {
+                                $i = $i+3; 
+                            }
                         }
                         $i++;
                         $this->_no_beautify = false;
@@ -445,7 +448,8 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
                 }
 
                 // Kill all chars below 32
-                if (ord($a[$i]) < 32) $a[$i] = ' ';
+                if (ord($a[$i]) < 32) { $a[$i] = ' '; 
+                }
                 if (!$this->_marks AND !$this->_marks1) {
                     if ($i > 0) {
                         // check if line is long comment initiated with /*
@@ -588,7 +592,8 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
                         // check if php code ends
                         if ($a[$i+1] == ">" AND $a[$i] == '?') {
                             $this->_new_line_counter = 0;
-                            if ($this->_outstr) $this->_out(trim($this->_outstr));
+                            if ($this->_outstr) { $this->_out(trim($this->_outstr)); 
+                            }
                              $this->_indent--;
                             $this->_out('?>');
                             //<?
@@ -599,21 +604,25 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
                         // Delete some odd spaces before ')'
                         if ($a[$i] == " " AND $a[$i+1] == ')') {
                             $this->_outstr  .= $a[$i];
-                            while ($a[$i+1] == ' ') $i++;
+                            while ($a[$i+1] == ' ') { $i++; 
+                            }
                             $this->_brackets--;
                             continue;
                         }
                         // Delete some odd spaces behind '('
                         if (($a[$i] == '(') AND $a[$i+1] == ' ') {
                             $this->_outstr  .= $a[$i];
-                            while ($a[$i+1] == ' ') $i++;
+                            while ($a[$i+1] == ' ') { $i++; 
+                            }
                             $this->_brackets++;
                             continue;
                         }
                     }
                     // check, if ; is last letter in line, check if ; is from for function
-                    if ($a[$i] == '(') $this->_brackets++;
-                    if ($a[$i] == ')') $this->_brackets--;
+                    if ($a[$i] == '(') { $this->_brackets++; 
+                    }
+                    if ($a[$i] == ')') { $this->_brackets--; 
+                    }
                     /*
                     if (substr($this->_outstr, 0, 3) == 'for') {
                     $this->_brackets = true;
@@ -659,8 +668,8 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
                     }
                     // check if }
                     if ($a[$i] == '}') {
-                        if ($i > 0) $this->_out(trim($this->_outstr)); // there was code before bracket->newline
-                        if ($i < sizeof($a)-1) {
+                        if ($i > 0) { $this->_out(trim($this->_outstr)); // there was code before bracket->newline
+                        }                        if ($i < sizeof($a)-1) {
                             if ($a[$i+1] == ';') {
                                 $this->_indent--;
                                 $this->_outstr  .= '}';
@@ -681,8 +690,8 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
                     }
                     // check if {
                     if ($a[$i] == '{') {
-                        if ($i > 0) $this->_out(trim($this->_outstr)); // there was code before bracket->newline
-                        $this->_out('{');
+                        if ($i > 0) { $this->_out(trim($this->_outstr)); // there was code before bracket->newline
+                        }                        $this->_out('{');
                         $this->_indent++;
                         continue;
                     }
@@ -714,8 +723,10 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
      */
     function _out($outstr) 
     {
-        if ($this->del_line) $outstr = trim($outstr);
-         if ($outstr == '') return;
+        if ($this->del_line) { $outstr = trim($outstr); 
+        }
+        if ($outstr == '') { return; 
+        }
         // additional beautifying
         $outstr = preg_replace('/( )*->( )*/', '->', $outstr);
         //->without surrounding spaces
@@ -731,7 +742,8 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
             if (strlen($outstr)+strlen($this->_getindent()) > $this->max_line) {
                 $b = 0;
                 while (strlen($outstr)+strlen($this->_getindent()) > $this->max_line) {
-                    if ($b > 0) $this->_indent++;
+                    if ($b > 0) { $this->_indent++; 
+                    }
                     $subout = substr($outstr, 0, $this->max_line-strlen($this->_getindent()));
                     $end = strrpos($subout, ' ');
                     if ($end == false) // check if breakable by a space
@@ -742,27 +754,33 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
                     $this->_allstr  .= $this->_getindent().trim($subout)."\n";
                     $outstr = substr($outstr, $end);
                     if ($outstr == '') {
-                        if ($b > 0) $this->indent--;
+                        if ($b > 0) { $this->indent--; 
+                        }
                         continue 2;
                     }
                     if ($b > 20) {
                         $this->_indent--;
                         continue; // just in case we got stuck ;-)
                     }
-                    if ($b > 0) $this->_indent--;
+                    if ($b > 0) { $this->_indent--; 
+                    }
                     $b++;
                 }
-                if ($b > 0) $this->_indent++;
+                if ($b > 0) { $this->_indent++; 
+                }
                 $this->_allstr  .= $this->_getindent().trim($outstr)."\n";
-                if ($b > 0) $this->_indent--;
+                if ($b > 0) { $this->_indent--; 
+                }
                 $this->_outstr = '';
                 return;
             }
         }
         //check if newline is requested
         //add before char
-        if ($this->_indent_next) $this->_indent++;
-        if ($this->_do_indent) $this->_allstr  .= $this->_getindent();
+        if ($this->_indent_next) { $this->_indent++; 
+        }
+        if ($this->_do_indent) { $this->_allstr  .= $this->_getindent(); 
+        }
          $this->_allstr  .= $outstr;
         if ($this->_indent_next) {
             $this->_indent--;
@@ -814,7 +832,8 @@ class tx_extdeveval_tune_phpBeautify extends PEAR
     function _getindent() 
     {
         $str = '';
-        if ($this->_indent < 0) $this->_indent = 0;
+        if ($this->_indent < 0) { $this->_indent = 0; 
+        }
         if ($this->indent_mode == 't') {
             for ($i = 0; $i < $this->_indent; $i++) {
                  $str  .= "\t";

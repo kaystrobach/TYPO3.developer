@@ -154,7 +154,8 @@ class ExtractExtensionClassNameService
 
         foreach ($extensionFileNames as $extensionFileName) {
             $classNamesInFile = $this->extractClassNames($path . $extensionFileName);
-            if (!count($classNamesInFile)) continue;
+            if (!count($classNamesInFile)) { continue; 
+            }
             foreach ($classNamesInFile as $className) {
                 // Register processed classes and the accordant file name:
                 if (!isset($this->processedClasses[strtolower($className)])
