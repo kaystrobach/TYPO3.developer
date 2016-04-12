@@ -1,3 +1,5 @@
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="Buttons">
@@ -9,7 +11,7 @@
 		Clear caches
 	</h1>
 	<f:form action="clearAllCaches">
-		<div class="typo3-message message-warning">
+		<div class="alert alert-danger">
 			<div class="message-header">
 				Attention, please use clear cache with care
 			</div>
@@ -18,8 +20,8 @@
 					This function clears all caches registered in the system so this can have a hard impact on the performance of a live system.
 				</p>
 				<f:form.hidden name="execute" value="1" />
-				<f:form.button>
-					<f:Be.Buttons.Icon icon="actions-system-cache-clear-impact-high" />
+				<f:form.button class="btn btn-default">
+					<core:icon identifier="actions-system-cache-clear-impact-high" />
 					Clear all Caches
 				</f:form.button>
 			</div>
