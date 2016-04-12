@@ -12,6 +12,14 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 class IfInstalledViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
 
 	/**
+	 * Initializes the "then" and "else" arguments
+	 */
+	public function initializeArguments()
+	{
+		$this->registerArgument('extensionName', 'string', 'extensionName', FALSE);
+	}
+
+	/**
 	 * @param string $extensionName
 	 * @return string
 	 */
