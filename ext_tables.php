@@ -9,7 +9,7 @@ if (TYPO3_MODE === 'BE') {
         array(// Allowed controller action combinations
         'Default'      => 'index,downloadComposer',
         'Community'    => 'index,documentation',
-        'Information'  => 'index,listPhpInfo,environmentVariables,hooks,signals,xclass',
+        'Information'  => 'index,listPhpInfo,environmentVariables,hooks,signals,xclass,extDirect',
         'Language'     => 'index,xmlToXlf',
         'Extension'    => 'index,upload,uploadProcess,autoload,autoloadGenerate,codestylecheck,downloadT3x,directoryStructureCheck,compareWithTerVersion',
         'Distribution' => 'index,new,create,update,edit,t3dExport,status,resetStatus',

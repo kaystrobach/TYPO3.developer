@@ -61,4 +61,18 @@ class InformationController extends ActionController
         $this->view->assign('xClasses', $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']);
     }
 
+    /**
+     *
+     */
+    public function extDirectAction() {
+        $extdirects = $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ExtDirect'];
+        foreach($extdirects as $key => $value) {
+            if(isset($value['callbackClass'])) {
+                $extdirects[$key]['functions'] = get_class_methods('\\' . $value['callbackClass']);
+            }
+        }
+
+        $this->view->assign('extdirects', $extdirects);
+    }
+
 }

@@ -1,0 +1,30 @@
+{namespace dev=KayStrobach\Developer\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Buttons">
+
+</f:section>
+
+<f:section name="Content">
+    <h1>ExtDirect</h1>
+
+    <dev:format.code title="create extdirect component" language="php">
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerExtDirectComponent(
+            'TYPO3.Demo.Test',
+            'typo3conf/ext/extdirecttest/class.tx_extdirecttest_test.php:tx_ExtDirectTest_test'
+        );
+    </dev:format.code>
+
+    <h1>Registered ExtDirect Components</h1>
+
+    <table class="table table-striped table-hover">
+        <f:for each="{extdirects}" as="extdirect" key="endpoint">
+            <tr>
+                <td>{endpoint}</td>
+                <td>
+                    <dev:Debug.viewArray value="{extdirect}" />
+                </td>
+            </tr>
+        </f:for>
+</f:section>
